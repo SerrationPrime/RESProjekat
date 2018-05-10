@@ -10,7 +10,6 @@ namespace RESProjekat
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hellooooo");
         }
     }
 }
