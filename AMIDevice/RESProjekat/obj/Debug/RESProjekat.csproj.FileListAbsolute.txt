@@ -1,1 +1,8 @@
 C:\Users\e3150-2015\Desktop\projekat\RESProjekat-master\AMIDevice\RESProjekat\bin\Debug\RESProjekat.exe.config
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\RESProjekat.exe.config
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\RESProjekat.exe
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\RESProjekat.pdb
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.csprojResolveAssemblyReference.cache
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.csproj.CoreCompileInputs.cache
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.exe
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.pdb

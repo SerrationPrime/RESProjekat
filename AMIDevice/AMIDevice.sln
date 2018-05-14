@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESProjekat", "RESProjekat\RESProjekat.csproj", "{080E7429-7DF8-4424-8356-AC3262873E00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMIDevice", "RESProjekat\AMIDevice.csproj", "{080E7429-7DF8-4424-8356-AC3262873E00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMICommons", "AMICommons\AMICommons.csproj", "{EECEC168-7EF6-4CEA-B868-72B74CA79A42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{080E7429-7DF8-4424-8356-AC3262873E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{080E7429-7DF8-4424-8356-AC3262873E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{080E7429-7DF8-4424-8356-AC3262873E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EECEC168-7EF6-4CEA-B868-72B74CA79A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EECEC168-7EF6-4CEA-B868-72B74CA79A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EECEC168-7EF6-4CEA-B868-72B74CA79A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EECEC168-7EF6-4CEA-B868-72B74CA79A42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
