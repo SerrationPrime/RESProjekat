@@ -5,3 +5,6 @@ C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMID
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevice.csproj.CoreCompileInputs.cache
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.exe
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.pdb
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\AMICommons.dll
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\AMICommons.pdb
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevice.csproj.CopyComplete
