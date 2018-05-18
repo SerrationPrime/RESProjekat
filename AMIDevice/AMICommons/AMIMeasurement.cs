@@ -11,6 +11,20 @@ namespace AMICommons
     /// </summary>
     public enum AMIMeasurementType { Voltage, Current, ActivePower, ReactivePower}
     /// <summary>
+    /// Merenje jednog parametra na AMI uredjaju
+    /// </summary>
+    public class AMIValuePair
+    {
+        public AMIMeasurementType Type { get; set; }
+        public double Value { get; set; }
+
+        public AMIValuePair(AMIMeasurementType type, double value)
+        {
+            Type = type;
+            Value = value;
+        }
+    }
+    /// <summary>
     /// Klasa koja predstavlja jedno, specificno merenje koje AMI uredjaj salje na agregator.
     /// </summary>
     /// 
@@ -54,14 +68,14 @@ namespace AMICommons
         /// <summary>
         /// Samo merenje: cetiri tupla koja oznacavaju cetiri merene velicine
         /// </summary>
-        public List<Tuple<AMIMeasurementType, double>> Measurement = new List<Tuple<AMIMeasurementType, double>>();
+        public List<AMIValuePair> Measurement = new List<AMIValuePair>();
 
         /// <summary>
         /// Prazan konstruktor za svrhe testiranja, daje nasumican tip merenja sa nasumicnim tipom merenja i nasumicnim uredjajem
         /// </summary>
         public AMIMeasurement()
         {
-            DeviceCode = "Device" + RNGGen.Next().ToString();
+            DeviceCode = this.GetHashCode().ToString();
             MeasurementTime = DateTimeOffset.Now;
             //Proveri komentar metode
             GenerateMeasurementValues();
@@ -82,10 +96,10 @@ namespace AMICommons
         {
             DeviceCode = id;
             MeasurementTime = DateTimeOffset.Now;
-            Measurement.Add(new Tuple<AMIMeasurementType, double>(AMIMeasurementType.Voltage, voltageValue));
-            Measurement.Add(new Tuple<AMIMeasurementType, double>(AMIMeasurementType.Current, currentValue));
-            Measurement.Add(new Tuple<AMIMeasurementType, double>(AMIMeasurementType.ActivePower, activePowerValue));
-            Measurement.Add(new Tuple<AMIMeasurementType, double>(AMIMeasurementType.ReactivePower, reactivePowerValue));
+            Measurement.Add(new AMIValuePair(AMIMeasurementType.Voltage, voltageValue));
+            Measurement.Add(new AMIValuePair(AMIMeasurementType.Current, currentValue));
+            Measurement.Add(new AMIValuePair(AMIMeasurementType.ActivePower, activePowerValue));
+            Measurement.Add(new AMIValuePair(AMIMeasurementType.ReactivePower, reactivePowerValue));
         }
 
         /// <summary>
@@ -98,7 +112,7 @@ namespace AMICommons
                 //Ok, ova linija je malo gadna
                 //Idemo redom kroz sve tipove merenja i generisem po jednu vrednost za svaku
                 //(RNGGen.Next(0,1)*2-1) znaci da nasumice generisem +1 ili -1, sto daje podrsku za negativne vrednosti
-                Measurement.Add(new Tuple<AMIMeasurementType, double>((AMIMeasurementType)i, (RNGGen.Next(0,2)*2-1)*(RNGGen.Next(LowerRandomMeasurementLimit, UpperRandomMeasurementLimit)+RNGGen.NextDouble())));
+                Measurement.Add(new AMIValuePair((AMIMeasurementType)i, (RNGGen.Next(0,2)*2-1)*(RNGGen.Next(LowerRandomMeasurementLimit, UpperRandomMeasurementLimit)+RNGGen.NextDouble())));
         }
 
         /// <summary>
@@ -108,14 +122,14 @@ namespace AMICommons
         {
             for (int i=0; i < 4; i++)
             {
-               Measurement[i] = new Tuple<AMIMeasurementType, double>(Measurement[i].Item1, Measurement[i].Item2+(RNGGen.Next(0, 2) * 2 - 1) * (RNGGen.Next(0, PerturbationLimit) + RNGGen.NextDouble()));
+               Measurement[i].Value += ((RNGGen.Next(0, 2) * 2 - 1) * (RNGGen.Next(0, PerturbationLimit) + RNGGen.NextDouble()));
                MeasurementTime = DateTimeOffset.Now;
             }
         }
 
         public override string ToString()
         {
-            return String.Format("V:{0} A:{1} P:{2} Q:{3}", Measurement[0].Item2, Measurement[1].Item2, Measurement[2].Item2, Measurement[3].Item2);
+            return String.Format("V:{0} A:{1} P:{2} Q:{3}", Measurement[0].Value, Measurement[1].Value, Measurement[2].Value, Measurement[3].Value);
         }
     }
 }

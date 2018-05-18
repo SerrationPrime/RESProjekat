@@ -37,7 +37,7 @@ namespace AMICommons
         /// .pdf kaze da bi elementi list trebala da bude tuple device code/lista merenja, ali nedostatak timestampa nema smisla.
         /// Ovo treba proveriti sa asistentom. Takodje, radije bih da je ova lista dictionary, ali pdf kaze lista
         /// </summary>
-        List<Tuple<string, List<AMIMeasurement>>> Buffer = new List<Tuple<string, List<AMIMeasurement>>>();
+        List<Tuple<string, List<AMISerializableValue>>> Buffer = new List<Tuple<string, List<AMISerializableValue>>>();
 
         /// <summary>
         /// Konstruktor koji kreira AggregatorMessage spreman za popunjavanje
@@ -60,12 +60,18 @@ namespace AMICommons
             int index = Buffer.FindIndex(r => r.Item1 == measurement.DeviceCode);
             if (index!=-1)
             {
-                Buffer[index].Item2.Add(measurement);
+                foreach (var pair in measurement.Measurement)
+                {
+                    Buffer[index].Item2.Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
+                }
             }
             else
             {
-                var NewElement=new Tuple<string, List<AMIMeasurement>>(measurement.DeviceCode, new List<AMIMeasurement>());
-                NewElement.Item2.Add(measurement);
+                var NewElement=new Tuple<string, List<AMISerializableValue>>(measurement.DeviceCode, new List<AMISerializableValue>());
+                foreach (var pair in measurement.Measurement)
+                {
+                    NewElement.Item2.Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
+                }
                 Buffer.Add(NewElement);
             }
         }
