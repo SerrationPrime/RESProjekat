@@ -1,0 +1,17 @@
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\bin\Debug\AMISystemManagement.exe.config
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\bin\Debug\AMISystemManagement.exe
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\bin\Debug\AMISystemManagement.pdb
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement.csprojResolveAssemblyReference.cache
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AlarmWindow.g.cs
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\MainWindow.g.cs
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\App.g.cs
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement_MarkupCompile.cache
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement_MarkupCompile.lref
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AlarmWindow.baml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\MainWindow.baml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement.g.resources
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement.Properties.Resources.resources
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement.csproj.GenerateResource.cache
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement.csproj.CoreCompileInputs.cache
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement.exe
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagement\obj\Debug\AMISystemManagement.pdb
