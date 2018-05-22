@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMICommons", "AMICommons\AM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMIAggregator", "AMIAggregator\AMIAggregator.csproj", "{ACB72A08-EE70-497C-B717-60F7CA7F69E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMISystemManagement", "AMISystemManagement\AMISystemManagement.csproj", "{E2E92D51-9294-4904-960E-029B335EC636}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMISystemManagementUI", "AMISystemManagementUI\AMISystemManagementUI.csproj", "{246AC81C-60EC-43B5-B75B-D6979D43AD1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{ACB72A08-EE70-497C-B717-60F7CA7F69E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACB72A08-EE70-497C-B717-60F7CA7F69E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACB72A08-EE70-497C-B717-60F7CA7F69E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2E92D51-9294-4904-960E-029B335EC636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2E92D51-9294-4904-960E-029B335EC636}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2E92D51-9294-4904-960E-029B335EC636}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2E92D51-9294-4904-960E-029B335EC636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{246AC81C-60EC-43B5-B75B-D6979D43AD1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{246AC81C-60EC-43B5-B75B-D6979D43AD1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{246AC81C-60EC-43B5-B75B-D6979D43AD1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{246AC81C-60EC-43B5-B75B-D6979D43AD1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

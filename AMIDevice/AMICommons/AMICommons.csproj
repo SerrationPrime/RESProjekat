@@ -46,6 +46,7 @@
     <Compile Include="AMIMeasurement.cs" />
     <Compile Include="AMISerializableValue.cs" />
     <Compile Include="IAggregator.cs" />
+    <Compile Include="IMessageForSystemManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
