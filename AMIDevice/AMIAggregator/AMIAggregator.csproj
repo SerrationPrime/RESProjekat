@@ -41,9 +41,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregatorManager.cs" />
+    <Compile Include="MessageForAggregator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AMICommons\AMICommons.csproj">
-      <Project>{EECEC168-7EF6-4CEA-B868-72B74CA79A42}</Project>
+      <Project>{eecec168-7ef6-4cea-b868-72b74ca79a42}</Project>
       <Name>AMICommons</Name>
     </ProjectReference>
   </ItemGroup>

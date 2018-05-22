@@ -1,52 +1,51 @@
-﻿using System;
+﻿using AMICommons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ServiceModel;
-using AMICommons;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AMIAggregator
 {
     class Program
     {
-        public static AggregatorMessage Message;
+        static ServiceHost serviceHost = new ServiceHost(typeof(MessageForAggregator));
+        static System.Timers.Timer timer = new System.Timers.Timer();
+        static MessageForAggregator obj = new MessageForAggregator();
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Please input aggregator code.");
-            string AggregatorCode = "";
-            //Samo kontrola unosa
-            while (AggregatorCode == "")
-            {
-                AggregatorCode = Console.ReadLine();
-            }
-            Message = new AggregatorMessage(AggregatorCode);
+            //ovo je za prijem od AMIDevice-a
+            OpenConnectionToAMIDevice();
+            
+            //ovo je za slanje ka SM, to be implemented
 
+            timer.Interval = 3000000; //5 minuta u milisekundama
+            timer.Elapsed += OnTimedEvent;
+            timer.Enabled = true;
 
-            //WCF mi je malo slab, mozda treba drugacije?
-            //Naziv endpointa je baziraan na nazivu agregatora
-            string AggregatorPath = String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.Port,AggregatorCode);
+            Console.ReadLine();
+        }
 
-            ServiceHost AggregatorHost = new ServiceHost(typeof(AggregatorManager));
-            AggregatorHost.AddServiceEndpoint(typeof(IAggregator), new NetTcpBinding(), AggregatorPath);
-            AggregatorHost.Open();
+        private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            //poziv slanja ka SM
+            //poziv brisanja podataka ako je slanje uspesno
+            obj.ClearData();
+        }
 
-            Console.WriteLine("Aggregator {0} is now active.", AggregatorCode);
-
-            Console.ReadKey();
-
-            //Implementirati za kasnije, vecinu logike za XML radi AggregatorManager, ovde samo treba logiku za cekanje i slanje na SystemManagement
-            //while(true)
-            //{
-                //    //brojac % vremeizkonfiguracije
-                //    //event po isteku tajmera
-                //    //ako vec postoji xml  (pukao je pre nego sto je poslao)
-                //    //nastavi sa citanjem jos 5 minuta pa salji ka SM
-
-                //    //ako je bilo neuspesno slanje ka SM
-                //    //onda ne brise svoju bazu
-                //    //vec ponovo ceka 5 minuta pa salje
-            //}
+        static void OpenConnectionToAMIDevice()
+        {
+            NetTcpBinding binding = new NetTcpBinding();
+            string uri = "net.tcp://localhost:10100/IMessageForAggregator";
+            serviceHost.AddServiceEndpoint(typeof(IMessageForAggregator), binding, new Uri(uri));
+            serviceHost.Open();
+        }
+        static void CloseConnectionToAMIDevice()
+        {
+            serviceHost.Close();
         }
     }
 }
