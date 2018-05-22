@@ -12,9 +12,7 @@ namespace AMIAggregator
     class Program
     {
         public static AggregatorMessage Message;
-        static ServiceHost serviceHost = new ServiceHost(typeof(MessageForAggregator));
         static System.Timers.Timer timer = new System.Timers.Timer();
-        static MessageForAggregator obj = new MessageForAggregator();
 
         static void Main(string[] args)
         {
@@ -50,7 +48,6 @@ namespace AMIAggregator
             //poziv slanja ka SM
             //poziv brisanja podataka ako je slanje uspesno
             //Podesi timestamp poruke u trenutku slanja
-            obj.ClearData();
         }
     }
 }
