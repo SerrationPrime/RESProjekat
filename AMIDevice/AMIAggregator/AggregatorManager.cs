@@ -1,9 +1,11 @@
 ﻿using AMICommons;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace AMIAggregator
 {
@@ -12,6 +14,11 @@ namespace AMIAggregator
     /// </summary>
     public class AggregatorManager : IAggregator
     {
+        //Kako podržavamo više različitih agregatora? Svakom treba sopstveni fajl
+        //Verovatno ćemo i ovo morati preko configa
+        //Verovatno namestiti i singleton, nema smisla da više managera radi konkurentno
+        private static string Filename="localStorage.xml";
+
         /// <summary>
         /// Primeti dodavanje agregatorskog koda; proveriti sa asistentom kako bi trebalo to da se sredi
         /// .pdf spominje listanje agregatora, ali kako sve skladistiti?
@@ -19,16 +26,10 @@ namespace AMIAggregator
         /// </summary>
         public AggregatorManager()
         {
-            if (CheckIfDocumentExists())
+            if (File.Exists(Filename))
             {
-                //TODO:Uraditi deserijalizaciju
+                Load();
             }
-        }
-
-        public bool CheckIfDocumentExists()
-        {
-            //TODO: Implement
-            return false;
         }
 
         public bool Connect(AMIMeasurement measurement)
@@ -54,9 +55,33 @@ namespace AMIAggregator
             return true;
         }
 
-        /*void UpdateLog()
+        //Što se tiče poruke: to je Public.Message.Buffer, to koristi za ove metode
+
+        /// <summary>
+        /// poziva se kada se podaci posalju ka SM
+        /// </summary>
+        public static void ClearData()
         {
-            //TODO: Implement
-        }*/
+            if (File.Exists(Filename))
+            {
+                File.Delete(Filename);
+            }
+            Program.Message.Buffer.Clear();
+        }
+
+        //Problem sa tvojim pristupom: serijalizuješ sve od jednom, umesto jedan po jedan; Ako program padne, gubiš sva merenja
+        void UpdateLog()
+        {
+            throw new NotImplementedException();
+        }
+        
+        void Load()
+        {
+            using (var stream = System.IO.File.OpenRead(Filename))
+            {
+                var serializer = new XmlSerializer(typeof(Dictionary<string, List<AMISerializableValue>>));
+                Program.Message.Buffer = serializer.Deserialize(stream) as Dictionary<string, List<AMISerializableValue>>;
+            }
+        }
     }
 }

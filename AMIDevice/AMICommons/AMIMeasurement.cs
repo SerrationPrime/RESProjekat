@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,22 +14,18 @@ namespace AMICommons
     /// <summary>
     /// Merenje jednog parametra na AMI uredjaju
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class AMIValuePair
     {
+        [DataMember]
         public AMIMeasurementType Type { get; set; }
+        [DataMember]
         public double Value { get; set; }
-
+        
         public AMIValuePair(AMIMeasurementType type, double value)
         {
             Type = type;
             Value = value;
-        }
-
-        //potreban je prazan konstruktor zbog serijalizacije
-        public AMIValuePair()
-        {
-
         }
     }
     /// <summary>
@@ -36,7 +33,7 @@ namespace AMICommons
     /// </summary>
     /// 
     //Javna polja i propertije bi verovatno najpametnije bilo oznaciti kao private ako ovu klasu ne budemo koristili van konstruktora
-    [Serializable]
+    [DataContract]
     public class AMIMeasurement
     {
         /// <summary>
@@ -55,12 +52,14 @@ namespace AMICommons
         /// Jedinstven kod AMI uredjaja. Znam da si ti spominjala int, ali ovako nesto u praksi bi verovatno bilo string,
         /// na primer, "10-16612A220V-01" ili tako nesto
         /// </summary>
+        [DataMember]
         public string DeviceCode { get; set; }
 
         /// <summary>
         /// Privatno polje koje prati vreme merenja.
         /// Za zahtevani Unix timestamp, koristi se property Timestamp
         /// </summary>
+        [DataMember]
         private DateTimeOffset MeasurementTime;
 
         /// <summary>
@@ -76,6 +75,7 @@ namespace AMICommons
         /// <summary>
         /// Samo merenje: cetiri tupla koja oznacavaju cetiri merene velicine
         /// </summary>
+        [DataMember]
         public List<AMIValuePair> Measurement = new List<AMIValuePair>();
 
         /// <summary>
