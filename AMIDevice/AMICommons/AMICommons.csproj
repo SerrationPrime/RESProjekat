@@ -32,7 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,7 +44,8 @@
     <Compile Include="AggregatorMessage.cs" />
     <Compile Include="AMIMeasurement.cs" />
     <Compile Include="AMISerializableValue.cs" />
-    <Compile Include="IAggregator.cs" />
+    <Compile Include="IMessageForAggregator.cs" />
+    <Compile Include="IMessageForSystemManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,31 +9,21 @@ namespace AMICommons
     /// <summary>
     /// Predstavlja jednu poruku koju agregator salje System Managementu
     /// </summary>
-    [DataContract]
     public class AggregatorMessage
     {
         /// <summary>
-        /// Konstante za komunikaciju
-        /// </summary>
-        public const string Port = "13375";
-        public const string AggregatorServiceName = "AggregatorManager";
-
-        /// <summary>
         /// Kod aggregatora, string iz razloga navedenih u AMIMeasurement.DeviceCode
         /// </summary>
-        [DataMember]
         public string AggregatorCode { get; set; }
         // <summary>
         /// Privatno polje koje prati vreme merenja.
         /// Za zahtevani Unix timestamp, koristi se property Timestamp
         /// </summary>
-        [DataMember]
         private DateTimeOffset MeasurementTime;
 
         /// <summary>
         /// 64-bitna Unix vremenska oznaka za trenutak merenja
         /// </summary>
-        
         public long Timestamp
         {
             get
@@ -46,10 +35,9 @@ namespace AMICommons
         /// <summary>
         /// Buffer koji se salje prema System Managementu
         /// .pdf kaze da bi elementi list trebala da bude tuple device code/lista merenja, ali nedostatak timestampa nema smisla.
-        /// Ipak sam odlucio da uradim implementaciju kao listu
+        /// Ovo treba proveriti sa asistentom. Takodje, radije bih da je ova lista dictionary, ali pdf kaze lista
         /// </summary>
-        [DataMember]
-        public Dictionary<string, List<AMISerializableValue>> Buffer = new Dictionary<string, List<AMISerializableValue>>();
+        List<Tuple<string, List<AMISerializableValue>>> Buffer = new List<Tuple<string, List<AMISerializableValue>>>();
 
         /// <summary>
         /// Konstruktor koji kreira AggregatorMessage spreman za popunjavanje
@@ -69,21 +57,22 @@ namespace AMICommons
         /// <param name="deviceID">Kod AMI uredjaja</param>
         public void Add(AMIMeasurement measurement)
         {
-            if (Buffer.ContainsKey(measurement.DeviceCode))
+            int index = Buffer.FindIndex(r => r.Item1 == measurement.DeviceCode);
+            if (index!=-1)
             {
                 foreach (var pair in measurement.Measurement)
                 {
-                    Buffer[measurement.DeviceCode].Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
+                    Buffer[index].Item2.Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
                 }
             }
             else
             {
-                var NewList = new List<AMISerializableValue>();
+                var NewElement=new Tuple<string, List<AMISerializableValue>>(measurement.DeviceCode, new List<AMISerializableValue>());
                 foreach (var pair in measurement.Measurement)
                 {
-                    NewList.Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
+                    NewElement.Item2.Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
                 }
-                Buffer.Add(measurement.DeviceCode,NewList);
+                Buffer.Add(NewElement);
             }
         }
     }
