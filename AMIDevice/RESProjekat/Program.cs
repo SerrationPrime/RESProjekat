@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,9 @@ namespace AMIDevice
     class Program
     {
         static AMIMeasurement Message;
+        static IMessageForAggregator proxy;
 
+        
         static void Main(string[] args)
         {
             Start();
@@ -42,6 +45,9 @@ namespace AMIDevice
             }
 
             //TODO: dodati pokretanje WCF proksija
+            //prebacila sam povezivanje u SimulationLoop, kako bi obezbedila da se za svaku poruku otvara nova konekcija
+            //ako ispadne agregator ili ne prodje konekcija (jer AGGr ne postoji) -\> catch exceptioon
+
         }
 
         /// <summary>
@@ -51,11 +57,32 @@ namespace AMIDevice
         {
             while (true)
             {
+                //TODO: pre slanja poruke, izaberi kom agregatoru ce da salje
+                // ili se to radi u klasi Device? mozda polje, da izabere pripapdnost agregatoru?
+                Connect();
                 Console.WriteLine("Current device state:" + Message.ToString());
                 //TODO: ubaciti logiku za slanje
                 System.Threading.Thread.Sleep(1000);
                 Message.PerturbValues();
+                try
+                {
+                    proxy.SendMessageToAggregator(Message);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    //uredjaj nastavlja da salje, cak i kada nema ko to da primi
+                }
             }
+        }
+        
+        static void Connect()
+        {
+            //TODO: obezbedi da vise uredjaja salje na agregator
+            NetTcpBinding binding = new NetTcpBinding();
+            string uri = "net.tcp://localhost:10100/IMessageForAggregator";
+            ChannelFactory<IMessageForAggregator> factory = new ChannelFactory<IMessageForAggregator>(binding, new EndpointAddress(uri));
+            proxy = factory.CreateChannel();
         }
     }
 }

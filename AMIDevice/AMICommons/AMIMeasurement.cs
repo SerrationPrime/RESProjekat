@@ -13,6 +13,7 @@ namespace AMICommons
     /// <summary>
     /// Merenje jednog parametra na AMI uredjaju
     /// </summary>
+    [Serializable]
     public class AMIValuePair
     {
         public AMIMeasurementType Type { get; set; }
@@ -23,12 +24,19 @@ namespace AMICommons
             Type = type;
             Value = value;
         }
+
+        //potreban je prazan konstruktor zbog serijalizacije
+        public AMIValuePair()
+        {
+
+        }
     }
     /// <summary>
     /// Klasa koja predstavlja jedno, specificno merenje koje AMI uredjaj salje na agregator.
     /// </summary>
     /// 
     //Javna polja i propertije bi verovatno najpametnije bilo oznaciti kao private ako ovu klasu ne budemo koristili van konstruktora
+    [Serializable]
     public class AMIMeasurement
     {
         /// <summary>
