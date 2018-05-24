@@ -41,6 +41,10 @@ namespace AMICommons
             {
                 return MeasurementTime.ToUnixTimeSeconds();
             }
+            set
+            {
+                MeasurementTime = DateTimeOffset.FromUnixTimeSeconds(value);
+            }
         }
 
         /// <summary>

@@ -71,6 +71,10 @@ namespace AMICommons
             {
                 return MeasurementTime.ToUnixTimeSeconds();
             }
+            set
+            {
+                MeasurementTime = DateTimeOffset.FromUnixTimeSeconds(value);
+            }
         }
         /// <summary>
         /// Samo merenje: cetiri tupla koja oznacavaju cetiri merene velicine
