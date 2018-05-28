@@ -128,7 +128,7 @@ namespace AMIAggregator
                     new XElement("AMIMeasurement",
                         new XElement("DeviceCode", measurement.DeviceCode),
                         new XElement("TimeStamp", measurement.Timestamp.ToString()),
-                        new XElement("Measurement", element))
+                         element)
                     );
                 
                 xDocument.Save(Filename);
