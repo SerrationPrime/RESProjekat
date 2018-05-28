@@ -28,5 +28,8 @@ namespace AMICommons
             Type = type;
             Value = value;
         }
+
+        public AMISerializableValue()
+        { }
     }
 }
