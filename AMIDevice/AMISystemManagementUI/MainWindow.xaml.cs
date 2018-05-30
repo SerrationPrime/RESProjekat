@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AMICommons;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,11 +22,24 @@ namespace AMISystemManagementUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        ServiceHost SystemManagementHost;
+
+        public static AggregatorMessage LastAggregatorMessage;
+        
         public MainWindow()
         {
             InitializeComponent();
             List<string> list = new List<string>() { "Voltage", "Current", "ActivePower", "ReactivePower" };
             comboBoxMeasurementType.ItemsSource = list;
+            StartAggregatorService();
+        }
+
+        private void StartAggregatorService()
+        {
+            string SystemManagementPath = String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.SysPort, AggregatorMessage.SysEndpointName);
+            SystemManagementHost = new ServiceHost(typeof(SystemManagementManager));
+            SystemManagementHost.AddServiceEndpoint(typeof(IMessageForSystemManagement), new NetTcpBinding(), SystemManagementPath);
+            SystemManagementHost.Open();
         }
 
 

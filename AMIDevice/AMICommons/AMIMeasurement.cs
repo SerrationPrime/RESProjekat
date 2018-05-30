@@ -87,7 +87,9 @@ namespace AMICommons
         /// </summary>
         public AMIMeasurement()
         {
-            DeviceCode = this.GetHashCode().ToString();
+           //Hash kod funkcije zavisi od njenog sadržaja
+           //Stoga, potrebno je generisati neki nasumični objekat da bi hash bio nasumičan
+            DeviceCode = Guid.NewGuid().GetHashCode().ToString();
             MeasurementTime = DateTimeOffset.Now;
             //Proveri komentar metode
             GenerateMeasurementValues();

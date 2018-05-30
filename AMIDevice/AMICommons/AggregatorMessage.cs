@@ -19,6 +19,9 @@ namespace AMICommons
         public const string Port = "13375";
         public const string AggregatorServiceName = "AggregatorManager";
 
+        public const string SysEndpointName = "SystemManagement";
+        public const string SysPort = "23111";
+
         /// <summary>
         /// Kod aggregatora, string iz razloga navedenih u AMIMeasurement.DeviceCode
         /// </summary>
