@@ -60,7 +60,7 @@ namespace AMIAggregator
         //Što se tiče poruke: to je Public.Message.Buffer, to koristi za ove metode
 
         /// <summary>
-        /// poziva se kada se podaci posalju ka SM
+        /// Poziva se kada se podaci posalju ka SM, brise skladistene podatke u agregatoru
         /// </summary>
         public static void ClearData()
         {
