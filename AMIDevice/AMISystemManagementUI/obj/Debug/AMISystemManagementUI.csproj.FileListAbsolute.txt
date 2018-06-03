@@ -15,6 +15,3 @@ C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\AMISystemManagementUI.csproj.CoreCompileInputs.cache
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\AMISystemManagementUI.exe
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\AMISystemManagementUI.pdb
-C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\AMICommons.dll
-C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\AMICommons.pdb
-C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\AMISystemManagementUI.csproj.CopyComplete
