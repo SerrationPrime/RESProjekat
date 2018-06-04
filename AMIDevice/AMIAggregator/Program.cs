@@ -2,16 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace AMIAggregator
 {
     class Program
     {
+        const string AggregatorLogName = "../AggregatorList.xml";
         public static AggregatorMessage Message;
         static System.Timers.Timer timer = new System.Timers.Timer();
 
@@ -24,6 +28,7 @@ namespace AMIAggregator
             {
                 AggregatorCode = Console.ReadLine();
             }
+            AddToList(AggregatorCode);
             Message = new AggregatorMessage(AggregatorCode);
 
             //WCF mi je malo slab, mozda treba drugacije?
@@ -54,7 +59,7 @@ namespace AMIAggregator
             timer.Elapsed += OnTimedEvent;
             timer.Enabled = true;
 
-            Console.WriteLine("Aggregator simulator is now active with a message interval of {0} seconds.", timer.Interval/1000);
+            Console.WriteLine("Aggregator simulator is now active with a message interval of {0} seconds.", timer.Interval / 1000);
 
             Console.ReadLine();
         }
@@ -79,7 +84,57 @@ namespace AMIAggregator
                 Console.WriteLine("Could not send data");
             }
 
-            
+
+        }
+
+        /// <summary>
+        /// Drzimo evidenciju svih mogucih naziva agregatora, koje device preuzima, ispisuje, i protiv kojih vrsi kontrolu.
+        /// Mozda bi bilo moguce drzati evidenciju AKTIVNIH agregatora, ali bi to zahtevalo ili komplikovano WCF resenje, ili neke metode koje se
+        /// pokrecu pri zatvaranju aplikacije. U svakom slucaju, ovo spada van opsega zadatka.
+        /// </summary>
+        /// <param name="aggregatorName"></param>
+        private static void AddToList(string aggregatorName)
+        {
+
+            if (!File.Exists(AggregatorLogName))
+            {
+                XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
+                xmlWriterSettings.Indent = true;
+                xmlWriterSettings.NewLineOnAttributes = true;
+                using (XmlWriter xmlWriter = XmlWriter.Create(AggregatorLogName))
+                {
+                    xmlWriter.WriteStartDocument();
+                    xmlWriter.WriteStartElement("Aggregators");
+                    xmlWriter.WriteElementString("Aggregator", aggregatorName);
+                    xmlWriter.WriteEndElement();
+                    xmlWriter.WriteEndDocument();
+
+                    xmlWriter.Flush();
+                    xmlWriter.Close();
+                }
+            }
+            else
+            {
+                using (XmlReader read = XmlReader.Create(AggregatorLogName))
+                {
+                    while (read.Read())
+                    {
+                        if (read.Value == aggregatorName)
+                            return;
+                    }
+                }
+
+
+                XDocument xDocument = XDocument.Load(AggregatorLogName);
+                XElement root = xDocument.Element("Aggregators");
+                IEnumerable<XElement> rows = root.Descendants("Aggregator");
+                XElement firstRow = rows.First();
+
+                firstRow.AddBeforeSelf(new XElement("Aggregator", aggregatorName));
+                xDocument.Save(AggregatorLogName);
+
+            }
         }
     }
 }
+    

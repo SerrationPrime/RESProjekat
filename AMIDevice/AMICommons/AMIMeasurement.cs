@@ -22,6 +22,11 @@ namespace AMICommons
         [DataMember]
         public double Value { get; set; }
         
+        public AMIValuePair()
+        {
+
+        }
+
         public AMIValuePair(AMIMeasurementType type, double value)
         {
             Type = type;

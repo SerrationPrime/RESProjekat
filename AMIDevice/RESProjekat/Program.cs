@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Configuration;
+using System.Xml;
 
 namespace AMIDevice
 {
@@ -13,6 +14,8 @@ namespace AMIDevice
     {
         static AMIMeasurement Message;
         static IAggregator Proxy;
+
+        static ChannelFactory<IAggregator> Factory;
 
         static void Main(string[] args)
         {
@@ -48,7 +51,15 @@ namespace AMIDevice
             }
 
             //Aplikacija se trenutno konfigurise preko app.config, i trenutno se veze na endpoint Aggregator1
-            ChannelFactory<IAggregator> Factory = new ChannelFactory<IAggregator>(new NetTcpBinding(), new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.Port, ConfigurationManager.AppSettings["Aggregator"])));
+            string ConfiguredAggregator = ReadAndValidateFromConfig();
+
+            if (ConfiguredAggregator == "")
+            {
+                Console.ReadKey();
+                return false;
+            }
+
+            Factory = new ChannelFactory<IAggregator>(new NetTcpBinding(), new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.Port, ConfiguredAggregator)));
             Proxy = Factory.CreateChannel();
 
             Console.WriteLine("Attempting to connect to device...");
@@ -85,8 +96,39 @@ namespace AMIDevice
                 Console.WriteLine("Current device state:" + Message.ToString());
                 System.Threading.Thread.Sleep(1000);
                 Message.PerturbValues();
-                Proxy.SendMeasurement(Message);
+                try
+                {
+                    Proxy.SendMeasurement(Message);
+                }
+                catch
+                {
+                    Console.WriteLine("Aggregator unavailable. Attempting to reconnect...");
+                    Proxy = Factory.CreateChannel();
+                }
             }
+        }
+
+        static string ReadAndValidateFromConfig()
+        {
+            string AggregatorFromConfig=ConfigurationManager.AppSettings["Aggregator"];
+
+            using (XmlReader read = XmlReader.Create(ConfigurationManager.AppSettings["AggregatorLogPath"]))
+            {
+                while (read.Read())
+                {
+                    if (read.Name == "Aggregator")
+                    {
+                        read.Read();
+                        if (read.Value == AggregatorFromConfig)
+                        {
+                            return AggregatorFromConfig;
+                        }
+                    }       
+                }
+            }
+
+            Console.WriteLine("Invalid aggregator name in config. Press any key to exit program.");
+            return "";
         }
     }
 }

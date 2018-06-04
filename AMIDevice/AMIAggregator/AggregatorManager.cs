@@ -20,6 +20,9 @@ namespace AMIAggregator
         //Verovatno ćemo i ovo morati preko configa
         //Verovatno namestiti i singleton, nema smisla da više managera radi konkurentno
         private static string Filename="localStorage.xml";
+        //Za rad sa vise uredjaja; bez ovoga, pokretanje nove instance AggregatorManager obara program jer se pokusava load
+        //sa vec ucitanim recnikom
+        private static bool isActive = false;
 
         /// <summary>
         /// Primeti dodavanje agregatorskog koda; proveriti sa asistentom kako bi trebalo to da se sredi
@@ -28,9 +31,10 @@ namespace AMIAggregator
         /// </summary>
         public AggregatorManager()
         {
-            if (File.Exists(Filename))
+            if (File.Exists(Filename) && !isActive)
             {
-                //Load();
+                Load();
+                isActive = true;
             }
         }
 
@@ -84,12 +88,13 @@ namespace AMIAggregator
                     xmlWriter.WriteStartDocument();
                     xmlWriter.WriteStartElement("AllMeasurements");
 
-                    xmlWriter.WriteStartElement("AMIMeasurement");
-                    xmlWriter.WriteElementString("DeviceCode", measurement.DeviceCode);
-                    xmlWriter.WriteElementString("Timestamp", measurement.Timestamp.ToString());
-
+                   // xmlWriter.WriteStartElement("AMIMeasurement");
+                    xmlWriter.WriteStartElement("DeviceCode");
+                    xmlWriter.WriteAttributeString("value",measurement.DeviceCode);
+                 
                     xmlWriter.WriteStartElement("Measurement");
-                    foreach(var amivp in measurement.Measurement)
+                    xmlWriter.WriteElementString("Timestamp", measurement.Timestamp.ToString());
+                    foreach (var amivp in measurement.Measurement)
                     {
                         xmlWriter.WriteStartElement("AMIValuePair");
                         xmlWriter.WriteElementString("Type", amivp.Type.ToString());
@@ -99,7 +104,7 @@ namespace AMIAggregator
                     }
                     xmlWriter.WriteEndElement();    //za Measurement
 
-                    xmlWriter.WriteEndElement();    //za AMIMeasurements
+                    xmlWriter.WriteEndElement();    //za DeviceCode
                     xmlWriter.WriteEndDocument();
 
                     xmlWriter.Flush();
@@ -110,39 +115,112 @@ namespace AMIAggregator
             {
                 XDocument xDocument = XDocument.Load(Filename);
                 XElement root = xDocument.Element("AllMeasurements");
-                IEnumerable<XElement> rows = root.Descendants("AMIMeasurement");
-                XElement firstRaw = rows.First();
-
-                XElement element = new XElement("Measurement");
-                foreach (var amivp in measurement.Measurement)
+                IEnumerable<XElement> deviceCodes = root.Descendants("DeviceCode");
+                if (CheckIfDeviceIsInStorage(measurement.DeviceCode))
                 {
-                    element.Add(
-                        new XElement("AMIValuePair", 
-                            new XElement("Type", amivp.Type), 
-                            new XElement("Value", amivp.Value))
-                            );
+                    var elementToAdd = new XElement("Measurement");
+                    elementToAdd.Add(new XElement("Timestamp", measurement.Timestamp));
 
+                    foreach (var amivp in measurement.Measurement)
+                    {
+                        XElement el2 = new XElement("AMIValuePair",
+                                    new XElement("Type", amivp.Type),
+                                    new XElement("Value", amivp.Value));
+                        elementToAdd.Add(el2);
+                    }
+
+                    xDocument.Element("AllMeasurements").Elements("DeviceCode").First(node => node.Attribute("value").Value == measurement.DeviceCode).Add(elementToAdd);
+                    xDocument.Save(Filename);
                 }
+                else
+                {
+                    XElement firstRow = deviceCodes.First();
 
-                firstRaw.AddBeforeSelf(
-                    new XElement("AMIMeasurement",
-                        new XElement("DeviceCode", measurement.DeviceCode),
-                        new XElement("TimeStamp", measurement.Timestamp.ToString()),
-                         element)
-                    );
-                
-                xDocument.Save(Filename);
+                    XElement element = new XElement("Measurement",
+                                       new XElement("Timestamp", measurement.Timestamp.ToString()));
+
+                    foreach (var amivp in measurement.Measurement)
+                    {
+                        element.Add(
+                            new XElement("AMIValuePair",
+                                new XElement("Type", amivp.Type),
+                                new XElement("Value", amivp.Value))
+                                );
+
+                    }
+
+                    firstRow.AddBeforeSelf(
+                        new XElement("DeviceCode", new XAttribute("value", measurement.DeviceCode),
+                             element)
+                        );
+
+                    xDocument.Save(Filename);
+                }                   
             }
+        }
+
+        bool CheckIfDeviceIsInStorage(string deviceCode)
+        {
+            using (XmlReader reader = XmlReader.Create(Filename))
+            {
+                while (reader.Read())
+                {
+                    if (reader.Name == "DeviceCode" && (reader.GetAttribute("value")==deviceCode))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         
         void Load()
         {
-            using (var stream = System.IO.File.OpenRead(Filename))
+            using (XmlReader reader = XmlReader.Create(Filename))
             {
-                //ovde je potrena izmena, posto se u lokalnu bazu ne ucitava dictionary, vec lista merenja
-                //kljuc je device code
-                var serializer = new XmlSerializer(typeof(Dictionary<string,List<AMISerializableValue>>));
-                Program.Message.Buffer = serializer.Deserialize(stream) as Dictionary<string, List<AMISerializableValue>>;
+                AMISerializableValue tempSerialisable = new AMISerializableValue();
+                List<AMISerializableValue> tempList = new List<AMISerializableValue>();
+                string currentDeviceCode = "";
+                while (reader.Read())
+                {
+                    switch (reader.Name)
+                    {
+                        case ("DeviceCode"):
+                            if (reader.NodeType == XmlNodeType.EndElement)
+                                break;
+                            currentDeviceCode = reader.GetAttribute("value");
+                            Program.Message.Buffer.Add(currentDeviceCode, new List<AMISerializableValue>());
+                            break;
+                        case ("Timestamp"):
+                            if (reader.NodeType == XmlNodeType.EndElement)
+                                break;
+                            reader.Read();
+                            tempSerialisable.Timestamp = Int32.Parse(reader.Value);
+                            break;
+                        case ("AMIValuePair"):
+                            if (reader.NodeType == XmlNodeType.EndElement)
+                                break;
+                            AMIValuePair temp = new AMIValuePair();
+                            reader.Read();
+                            reader.Read();
+                            reader.Read();
+                            temp.Type = (AMIMeasurementType)Enum.Parse(typeof(AMIMeasurementType),reader.Value);
+                            reader.Read();
+                            reader.Read();
+                            reader.Read();
+                            reader.Read();
+                            temp.Value = Double.Parse(reader.Value);
+                            tempSerialisable.Measurements.Add(temp);
+                            break;
+                        case ("Measurement"):
+                            if (reader.NodeType != XmlNodeType.EndElement)
+                                break;
+                            Program.Message.Buffer[currentDeviceCode].Add(tempSerialisable);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         }
     }

@@ -78,18 +78,22 @@ namespace AMICommons
         {
             if (Buffer.ContainsKey(measurement.DeviceCode))
             {
+                List<AMIValuePair> elementList = new List<AMIValuePair>();
                 foreach (var pair in measurement.Measurement)
                 {
-                    Buffer[measurement.DeviceCode].Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
+                    elementList.Add(pair);
                 }
+                AMISerializableValue toAdd = new AMISerializableValue(measurement.Timestamp, elementList);
             }
             else
             {
                 var NewList = new List<AMISerializableValue>();
+                var elementList = new List<AMIValuePair>();
                 foreach (var pair in measurement.Measurement)
                 {
-                    NewList.Add(new AMISerializableValue(measurement.Timestamp, pair.Type, pair.Value));
+                    elementList.Add(pair);
                 }
+                NewList.Add(new AMISerializableValue(measurement.Timestamp, elementList));
                 Buffer.Add(measurement.DeviceCode,NewList);
             }
         }

@@ -8,28 +8,26 @@ using System.Threading.Tasks;
 namespace AMICommons
 {
     /// <summary>
-    /// Verzija AMIValuePair prosirena dodatkom vremenske oznake. Koristi je agregator za svoje poruke
-    /// Ne nasledjuje AMIValuePair zbog mogucih nejasnoca sa serijalizacijom
+    /// Verzija liste AMIValuePair prosirena dodatkom vremenske oznake. Koristi je agregator za svoje poruke
     /// </summary>
     [Serializable]
     [DataContract]
     public class AMISerializableValue
     {
         [DataMember]
+        public List<AMIValuePair> Measurements = new List<AMIValuePair>();
+        [DataMember]
         public long Timestamp { get; set; }
-        [DataMember]
-        public AMIMeasurementType Type { get; set; }
-        [DataMember]
-        public double Value { get; set; }
-
-        public AMISerializableValue(long timestamp, AMIMeasurementType type, double value)
+ 
+        public AMISerializableValue(long timestamp, List<AMIValuePair> list)
         {
             Timestamp = timestamp;
-            Type = type;
-            Value = value;
+            Measurements = list;
         }
 
         public AMISerializableValue()
-        { }
+        {
+
+        }
     }
 }

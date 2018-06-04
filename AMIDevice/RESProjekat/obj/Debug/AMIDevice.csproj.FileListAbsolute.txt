@@ -8,3 +8,13 @@ C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESP
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\AMICommons.dll
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\AMICommons.pdb
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevice.csproj.CopyComplete
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\RESProjekat.exe.config
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\RESProjekat.exe
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\RESProjekat.pdb
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\AMICommons.dll
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\AMICommons.pdb
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevice.csprojResolveAssemblyReference.cache
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevice.csproj.CoreCompileInputs.cache
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevice.csproj.CopyComplete
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.exe
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.pdb

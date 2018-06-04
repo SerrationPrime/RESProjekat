@@ -8,3 +8,13 @@ C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\bin\Debug\AM
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.csproj.CopyComplete
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.exe
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.pdb
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.csprojResolveAssemblyReference.cache
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.csproj.CoreCompileInputs.cache
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.exe
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.pdb
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\bin\Debug\AMIAggregator.exe.config
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\bin\Debug\AMIAggregator.exe
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\bin\Debug\AMIAggregator.pdb
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\bin\Debug\AMICommons.dll
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\bin\Debug\AMICommons.pdb
+C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMIAggregator\obj\Debug\AMIAggregator.csproj.CopyComplete
