@@ -22,7 +22,7 @@ namespace AMIDevice
             if (Start())
                 SimulationLoop();
             else
-                Console.ReadKey();
+                return;
         }
 
         /// <summary>
@@ -55,8 +55,7 @@ namespace AMIDevice
 
             if (ConfiguredAggregator == "")
             {
-                Console.ReadKey();
-                return false;
+                throw new ConfigurationErrorsException("Aggregator not found in configuration");
             }
 
             Factory = new ChannelFactory<IAggregator>(new NetTcpBinding(), new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.Port, ConfiguredAggregator)));
@@ -79,7 +78,7 @@ namespace AMIDevice
                 catch(Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    return false;
+                    System.Threading.Thread.Sleep(10000);
                 }
             }
             Console.WriteLine("Successfully connected.");

@@ -38,7 +38,13 @@ namespace AMISystemManagementUI
         {
             string SystemManagementPath = String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.SysPort, AggregatorMessage.SysEndpointName);
             SystemManagementHost = new ServiceHost(typeof(SystemManagementManager));
-            SystemManagementHost.AddServiceEndpoint(typeof(IMessageForSystemManagement), new NetTcpBinding(), SystemManagementPath);
+
+            var binding = new NetTcpBinding();
+            binding.MaxBufferPoolSize = 20000000;
+            binding.MaxBufferSize = 20000000;
+            binding.MaxReceivedMessageSize = 20000000;
+
+            SystemManagementHost.AddServiceEndpoint(typeof(IMessageForSystemManagement), binding, SystemManagementPath);
             SystemManagementHost.Open();
         }
 
