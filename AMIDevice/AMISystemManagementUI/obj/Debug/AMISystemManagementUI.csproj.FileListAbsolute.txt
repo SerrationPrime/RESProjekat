@@ -18,3 +18,11 @@ C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\AMICommons.dll
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\AMICommons.pdb
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\AMISystemManagementUI.csproj.CopyComplete
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\PlotWindow.g.cs
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.dll
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.Wpf.dll
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.pdb
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.xml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.Wpf.pdb
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.Wpf.xml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\PlotWindow.baml

@@ -1,4 +1,6 @@
 ﻿using AMICommons;
+using OxyPlot;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace AMISystemManagementUI
 {
@@ -24,8 +27,10 @@ namespace AMISystemManagementUI
     {
         ServiceHost SystemManagementHost;
 
+        public PlotModel Model { get; private set; }
+
         public static AggregatorMessage LastAggregatorMessage;
-        
+        public string Filename = "globalStorage.xml";
         public MainWindow()
         {
             InitializeComponent();
@@ -40,8 +45,8 @@ namespace AMISystemManagementUI
             SystemManagementHost = new ServiceHost(typeof(SystemManagementManager));
 
             var binding = new NetTcpBinding();
-            binding.MaxBufferPoolSize = 20000000;
             binding.MaxBufferSize = 20000000;
+            binding.MaxBufferPoolSize = 20000000;
             binding.MaxReceivedMessageSize = 20000000;
 
             SystemManagementHost.AddServiceEndpoint(typeof(IMessageForSystemManagement), binding, SystemManagementPath);
@@ -51,8 +56,76 @@ namespace AMISystemManagementUI
 
         private void buttonDraw1_Click(object sender, RoutedEventArgs e)
         {
-            ValidateDeviceMeasurement();
+            if (!ValidateDeviceMeasurement())
+                return;
             //to do: crtanje dijagrama
+            string deviceCode = textBoxDeviceCode.Text.Trim();
+            string[] dateTime = textBoxDate.Text.Trim().Split('.');
+            DateTime date = new DateTime(Int32.Parse(dateTime[2]), Int32.Parse(dateTime[1]), Int32.Parse(dateTime[0]));
+
+            long minTime = DateHelper.StartOfDay(date);
+            long maxTime = DateHelper.EndOfDay(date);
+
+            string type = comboBoxMeasurementType.SelectedItem.ToString(); List<int> vremena = new List<int>();
+            List<int> vrednosti = new List<int>();
+
+            var GraphSeries = new LineSeries { Title = type, MarkerType = MarkerType.Circle };
+            var Plot = new PlotModel { Title = "" };
+
+            using (XmlReader reader = XmlReader.Create(Filename))
+            {
+                while (reader.Read())
+                {
+                    switch (reader.Name)
+                    {
+                        case ("DeviceCode"):
+                            if (reader.NodeType == XmlNodeType.EndElement)
+                                break;
+                            if (reader.GetAttribute("value") == deviceCode)
+                            {
+                                while (reader.Read() && reader.Name != "DeviceCode")
+                                {
+                                    if (reader.Name == "Timestamp") //dateTimeOffset u seconds i onda uporedi sa ovim sekundama
+                                    {
+                                        reader.Read();
+                                        if (long.Parse(reader.Value) >= minTime && long.Parse(reader.Value) <= maxTime)
+                                        {
+                                            var time = (Double.Parse(reader.Value));
+                                            while (reader.Read())
+                                            {
+                                                if (reader.Name == "Type")
+                                                {
+                                                    reader.Read();
+                                                    if (reader.Value == type)
+                                                    {
+                                                        reader.ReadToFollowing("Value");
+                                                        reader.Read();
+                                                        var value = (Double.Parse(reader.Value));
+                                                        GraphSeries.Points.Add(new DataPoint(time, value));
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+            }
+
+            List<DataPoint> temp =GraphSeries.Points.OrderBy(i => i.X).ToList();
+            var GraphSeriesOrdered = new LineSeries();
+            GraphSeriesOrdered.ItemsSource = temp;
+            Plot.Series.Add(GraphSeriesOrdered);
+
+            PlotWindow window = new PlotWindow(Plot);
+            window.ShowDialog();
         }
 
         private void buttonDraw2_Click(object sender, RoutedEventArgs e)
@@ -61,11 +134,11 @@ namespace AMISystemManagementUI
             //to do: crtanje dijagrama
         }
 
-        private void buttonDraw3_Click(object sender, RoutedEventArgs e)
-        {
-            ValidateAverageDeviceMeasurement();
-            //to do: crtanje dijagrama
-        }
+        //private void buttonDraw3_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ValidateAverageDeviceMeasurement();
+        //    //to do: crtanje dijagrama
+        //}
 
         private void buttonDraw4_Click(object sender, RoutedEventArgs e)
         {
@@ -151,7 +224,7 @@ namespace AMISystemManagementUI
             {
                 labelDeviceCodeError.Content = "";
             }
-            //if(textBoxDeviceCode.Text.Trim().Length != VREDNOST)    //proveri da li unesen broj odgovara hash formatu
+            //if(textBoxDeviceCode.Text.Trim().Length != VREDNOST)    //proveri da li postoji u STORAGE-u
             //{                                                       //takodje proveri da li ima slovo umesto broja
             //      labelDeviceCodeError.Content = "Device code is invalid";
             //      return false;
@@ -202,7 +275,7 @@ namespace AMISystemManagementUI
             {
                 labelAgregatorCodeError.Content = "";
             }
-            //if(textBoxAgregatorCode.Text.Trim().Length != VREDNOST)    //proveri da li je unesen string u odgovarajucem formatu - treba da se dogovorimo kako izgleda agregator kod
+            //if(textBoxAgregatorCode.Text.Trim().Length != VREDNOST)    //proveri da li je unesen string u STORAGEU
             //{ 
             //      labelAgregatorCodeError.Content = "Aggregator code is invalid.";
             //      return false;
@@ -223,38 +296,38 @@ namespace AMISystemManagementUI
             return ValidateCommon();
         }
 
-        private bool ValidateAverageDeviceMeasurement()
-        {
-            ValidateCommon();
-            if (textBoxDeviceCode.Text.Trim().Equals(""))
-            {
-                labelDeviceCodeError.Content = "Enter device code.";
-                return false;
-            }
-            else
-            {
-                labelDeviceCodeError.Content = "";
-            }
-            //if(textBoxDeviceCode.Text.Trim().Length != VREDNOST)    //proveri da li unesen broj odgovara hash formatu
-            //{                                                       //takodje proveri da li ima slovo umesto broja
-            //      labelDeviceCodeError.Content = "Device code is invalid";
-            //      return false;
-            //}
-            // else
-            //{
-            //    labelDeviceCodeError.Content = "";
-            //}
-            //if(textBoxDeviceCode.Text.Trim() not exists )     //proveri da li postoji uredjaj sa tim kodom
-            //{
-            //    labelDeviceCodeError.Content = "Device with that code does not exist.";
-            //    return false;
-            //} 
-            // else
-            //{
-            //    labelDeviceCodeError.Content = "";
-            //}
-            return ValidateCommon();
-        }
+        //private bool ValidateAverageDeviceMeasurement()
+        //{
+        //    ValidateCommon();
+        //    if (textBoxDeviceCode.Text.Trim().Equals(""))
+        //    {
+        //        labelDeviceCodeError.Content = "Enter device code.";
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        labelDeviceCodeError.Content = "";
+        //    }
+        //    //if(textBoxDeviceCode.Text.Trim().Length != VREDNOST)    //proveri da li unesen broj odgovara hash formatu
+        //    //{                                                       //takodje proveri da li ima slovo umesto broja
+        //    //      labelDeviceCodeError.Content = "Device code is invalid";
+        //    //      return false;
+        //    //}
+        //    // else
+        //    //{
+        //    //    labelDeviceCodeError.Content = "";
+        //    //}
+        //    //if(textBoxDeviceCode.Text.Trim() not exists )     //proveri da li postoji uredjaj sa tim kodom
+        //    //{
+        //    //    labelDeviceCodeError.Content = "Device with that code does not exist.";
+        //    //    return false;
+        //    //} 
+        //    // else
+        //    //{
+        //    //    labelDeviceCodeError.Content = "";
+        //    //}
+        //    return ValidateCommon();
+        //}
 
         private bool ValidateAverageAggregatorMeasurement()
         {
@@ -277,7 +350,7 @@ namespace AMISystemManagementUI
             {
                 labelAgregatorCodeError.Content = "";
             }
-            //if(textBoxAgregatorCode.Text.Trim().Length != VREDNOST)    //proveri da li je unesen string u odgovarajucem formatu
+            //if(textBoxAgregatorCode.Text.Trim().Length != VREDNOST)    //proveri da li je unesen string u storage-u
             //{ 
             //      labelAgregatorCodeError.Content = "Aggregator code is invalid.";
             //      return false;
