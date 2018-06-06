@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMIAggregator", "AMIAggrega
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMISystemManagementUI", "AMISystemManagementUI\AMISystemManagementUI.csproj", "{246AC81C-60EC-43B5-B75B-D6979D43AD1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMICommonsTest", "AMICommonsTest\AMICommonsTest.csproj", "{BB2E2D69-A4C3-42A6-8C34-BE0B42C344BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFBasicTests", "WCFBasicTest\WCFBasicTests.csproj", "{8FE4F36A-945F-471C-8B33-E2FDE116B43D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{246AC81C-60EC-43B5-B75B-D6979D43AD1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{246AC81C-60EC-43B5-B75B-D6979D43AD1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{246AC81C-60EC-43B5-B75B-D6979D43AD1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2E2D69-A4C3-42A6-8C34-BE0B42C344BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2E2D69-A4C3-42A6-8C34-BE0B42C344BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2E2D69-A4C3-42A6-8C34-BE0B42C344BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2E2D69-A4C3-42A6-8C34-BE0B42C344BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE4F36A-945F-471C-8B33-E2FDE116B43D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE4F36A-945F-471C-8B33-E2FDE116B43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE4F36A-945F-471C-8B33-E2FDE116B43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE4F36A-945F-471C-8B33-E2FDE116B43D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

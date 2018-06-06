@@ -21,13 +21,43 @@ namespace AMICommons
  
         public AMISerializableValue(long timestamp, List<AMIValuePair> list)
         {
+            Measurements = list ?? throw new ArgumentNullException();
+            if (!IsValid())
+            {
+                throw new ArgumentException();
+            }
             Timestamp = timestamp;
-            Measurements = list;
+           
         }
-
         public AMISerializableValue()
         {
 
+        }
+
+        /// <summary>
+        /// Vrsi identicnu funkcionalnost kao AMIMeasurement.IsValid()
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid()
+        {
+            if (Measurements.Count != Enum.GetNames(typeof(AMIMeasurementType)).Count()*AMIMeasurement.MeasurementPairsPerType)
+                return false;
+            foreach (AMIMeasurementType type in Enum.GetValues(typeof(AMIMeasurementType)))
+            {
+                int typeCount = 0;
+                foreach (var pair in Measurements)
+                {
+                    if (pair.Type == type)
+                    {
+                        typeCount++;
+                    }
+                }
+                if (typeCount != AMIMeasurement.MeasurementPairsPerType)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

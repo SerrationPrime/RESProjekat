@@ -49,6 +49,11 @@ namespace AMICommons
         const int PerturbationLimit = 10;
 
         /// <summary>
+        /// Oznacava koliko svaki AMIMeasurementType poseduje merenja u Measurement polju ove klase. Slicno vazi za AMISerialisableValue, i ona takodje koristi ovu const.
+        /// </summary>
+        public const int MeasurementPairsPerType= 1;
+
+        /// <summary>
         /// Nasumicni generator brojeva koriscen u nekim konstruktorima i metodama
         /// </summary>
         Random RNGGen = new Random();
@@ -106,19 +111,11 @@ namespace AMICommons
         /// <param name="id"></param>
         public AMIMeasurement(string id)
         {
+            if (String.IsNullOrWhiteSpace(id))
+                throw new ArgumentNullException();
             DeviceCode = id;
             MeasurementTime = DateTimeOffset.Now;
             GenerateMeasurementValues();
-        }
-
-        public AMIMeasurement(string id, double voltageValue, double currentValue, double activePowerValue, double reactivePowerValue)
-        {
-            DeviceCode = id;
-            MeasurementTime = DateTimeOffset.Now;
-            Measurement.Add(new AMIValuePair(AMIMeasurementType.Voltage, voltageValue));
-            Measurement.Add(new AMIValuePair(AMIMeasurementType.Current, currentValue));
-            Measurement.Add(new AMIValuePair(AMIMeasurementType.ActivePower, activePowerValue));
-            Measurement.Add(new AMIValuePair(AMIMeasurementType.ReactivePower, reactivePowerValue));
         }
 
         /// <summary>
@@ -146,9 +143,46 @@ namespace AMICommons
             }
         }
 
+
+        /// <summary>
+        /// Funkcija za kontrolu normalnosti merenja.
+        /// </summary>
+        /// <returns>True u slucaju da je ijedno polje neinicijalizovano, ili lista merenja nije u pravom obliku</returns>
+        public bool IsNullOrEmpty()
+        {
+            return String.IsNullOrEmpty(DeviceCode) || MeasurementTime == default(DateTimeOffset);
+        }
         public override string ToString()
         {
             return String.Format("V:{0} A:{1} P:{2} Q:{3}", Measurement[0].Value, Measurement[1].Value, Measurement[2].Value, Measurement[3].Value);
+        }
+
+
+        /// <summary>
+        /// Metoda za proveru da li je polje Measurement dobro formirano. Ovo polje treba da ima po MeasurementPairPerType
+        /// AMIValuePair-ova za svaki enum unutar AMIMeasurementType.
+        /// </summary>
+        /// <returns>True u slucaju da su navedeni uslovi zadovoljeni.</returns>
+        public bool IsValid()
+        {
+            if (Measurement.Count != Enum.GetNames(typeof(AMIMeasurementType)).Count()*MeasurementPairsPerType)
+                return false;
+            foreach (AMIMeasurementType type in Enum.GetValues(typeof(AMIMeasurementType)))
+            {
+                int typeCount = 0;
+                foreach(var pair in Measurement)
+                {
+                    if (pair.Type == type)
+                    {
+                        typeCount++;
+                    }     
+                }
+                if (typeCount != MeasurementPairsPerType)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
