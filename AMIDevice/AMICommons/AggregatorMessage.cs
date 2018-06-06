@@ -84,6 +84,7 @@ namespace AMICommons
                     elementList.Add(pair);
                 }
                 AMISerializableValue toAdd = new AMISerializableValue(measurement.Timestamp, elementList);
+                Buffer[measurement.DeviceCode].Add(toAdd);
             }
             else
             {

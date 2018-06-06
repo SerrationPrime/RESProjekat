@@ -6,7 +6,6 @@ C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\obj\Debug\AMICo
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\obj\Debug\AMICommons.pdb
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\bin\Debug\AMICommons.dll
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\bin\Debug\AMICommons.pdb
-C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\obj\Debug\AMICommons.csprojResolveAssemblyReference.cache
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\obj\Debug\AMICommons.csproj.CoreCompileInputs.cache
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\obj\Debug\AMICommons.dll
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMICommons\obj\Debug\AMICommons.pdb

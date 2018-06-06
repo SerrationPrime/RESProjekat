@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AMISystemManagementUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="410">
+        Title="MainWindow" Height="570" Width="410">
     <Grid>
         <Label x:Name="labelNaslov" Content="System Management" VerticalAlignment="Top" Margin="31,0,36,0" Width="325" Height="47" FontSize="24" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Label x:Name="labelDeviceCode" Content="DeviceCode:" HorizontalAlignment="Left" Margin="31,61,0,0" VerticalAlignment="Top" Width="144"/>
@@ -24,15 +24,15 @@
         <Label x:Name="labelPodnaslov" Content="Choose a way to draw:" HorizontalAlignment="Left" Margin="31,333,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,-0.077" Width="292" FontSize="14" FontStyle="Italic" FontWeight="Bold"/>
         <Label x:Name="labelDraw1" Content="Device measurement:" HorizontalAlignment="Left" Margin="31,367,0,0" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="labelDraw2" Content="Aggregator measurement:" HorizontalAlignment="Left" Margin="31,398,0,0" VerticalAlignment="Top" Width="200"/>
-        <Label x:Name="labelDraw3" Content="Average device measurement:" HorizontalAlignment="Left" Margin="31,429,0,0" VerticalAlignment="Top" Width="200"/>
-        <Label x:Name="labelDraw4" Content="Average aggregator measurement:" HorizontalAlignment="Left" Margin="31,460,0,0" VerticalAlignment="Top" Width="200"/>
+        <!--<Label x:Name="labelDraw3" Content="Average device measurement:" HorizontalAlignment="Left" Margin="31,429,0,0" VerticalAlignment="Top" Width="200"/>-->
+        <Label x:Name="labelDraw4" Content="Average aggregator measurement:" HorizontalAlignment="Left" Margin="31,429,0,0" VerticalAlignment="Top" Width="200"/>
         <Button x:Name="buttonDraw1" Content="Draw" HorizontalAlignment="Left" Margin="254,367,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="buttonDraw1_Click"/>
         <Button x:Name="buttonDraw2" Content="Draw" HorizontalAlignment="Left" Margin="254,398,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="buttonDraw2_Click"/>
-        <Button x:Name="buttonDraw3" Content="Draw" HorizontalAlignment="Left" Margin="254,429,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="buttonDraw3_Click"/>
-        <Button x:Name="buttonDraw4" Content="Draw" HorizontalAlignment="Left" Margin="254,460,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="buttonDraw4_Click"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="8" Margin="10,500,0,0" Stroke="Black" VerticalAlignment="Top" Width="382"/>
-        <Button x:Name="ButtonEnlistAlarm" Content="Enlist" HorizontalAlignment="Left" Margin="254,522,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="ButtonEnlistAlarm_Click"/>
-        <Label Content="Enlist alarms:" HorizontalAlignment="Left" Margin="31,522,0,0" VerticalAlignment="Top" Width="200"/>
+        <!--<Button x:Name="buttonDraw3" Content="Draw" HorizontalAlignment="Left" Margin="254,429,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="buttonDraw3_Click"/>-->
+        <Button x:Name="buttonDraw4" Content="Draw" HorizontalAlignment="Left" Margin="254,429,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="buttonDraw4_Click"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="8" Margin="10,469,0,0" Stroke="Black" VerticalAlignment="Top" Width="382"/>
+        <Button x:Name="ButtonEnlistAlarm" Content="Enlist" HorizontalAlignment="Left" Margin="254,491,0,0" VerticalAlignment="Top" Width="127" Height="26" Click="ButtonEnlistAlarm_Click"/>
+        <Label Content="Enlist alarms:" HorizontalAlignment="Left" Margin="31,491,0,0" VerticalAlignment="Top" Width="200"/>
 
 
 

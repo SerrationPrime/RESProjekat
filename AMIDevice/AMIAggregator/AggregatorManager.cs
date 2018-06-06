@@ -119,7 +119,7 @@ namespace AMIAggregator
                 if (CheckIfDeviceIsInStorage(measurement.DeviceCode))
                 {
                     var elementToAdd = new XElement("Measurement");
-                    elementToAdd.Add(new XElement("Timestamp", measurement.Timestamp));
+                    elementToAdd.Add(new XElement("Timestamp", measurement.Timestamp.ToString()));
 
                     foreach (var amivp in measurement.Measurement)
                     {
@@ -216,6 +216,7 @@ namespace AMIAggregator
                             if (reader.NodeType != XmlNodeType.EndElement)
                                 break;
                             Program.Message.Buffer[currentDeviceCode].Add(tempSerialisable);
+                            tempSerialisable = new AMISerializableValue();
                             break;
                         default:
                             break;

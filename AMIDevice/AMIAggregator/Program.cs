@@ -67,7 +67,11 @@ namespace AMIAggregator
         private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             IMessageForSystemManagement Proxy;
-            ChannelFactory<IMessageForSystemManagement> Factory = new ChannelFactory<IMessageForSystemManagement>(new NetTcpBinding(), new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.SysPort, AggregatorMessage.SysEndpointName)));
+            var binding = new NetTcpBinding();
+            binding.MaxBufferSize = 20000000;
+            binding.MaxBufferPoolSize = 20000000;
+            binding.MaxReceivedMessageSize = 20000000;
+            ChannelFactory<IMessageForSystemManagement> Factory = new ChannelFactory<IMessageForSystemManagement>(binding, new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.SysPort, AggregatorMessage.SysEndpointName)));
             Proxy = Factory.CreateChannel();
             //poziv slanja ka SM
             //Podesi timestamp poruke u trenutku slanja
@@ -79,8 +83,9 @@ namespace AMIAggregator
                 Console.WriteLine("Data successfuly sent.");
                 AggregatorManager.ClearData();
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 Console.WriteLine("Could not send data");
             }
 
