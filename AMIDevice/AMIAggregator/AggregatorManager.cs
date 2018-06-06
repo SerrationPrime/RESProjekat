@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -14,6 +15,7 @@ namespace AMIAggregator
     /// <summary>
     /// Implementacija agregatorske WCF sluzbe, bavi se prijemom podataka i skladistenjem u kolekciju i XML
     /// </summary>
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class AggregatorManager : IAggregator
     {
         //Kako podržavamo više različitih agregatora? Svakom treba sopstveni fajl
@@ -22,7 +24,7 @@ namespace AMIAggregator
         private static string Filename="localStorage.xml";
         //Za rad sa vise uredjaja; bez ovoga, pokretanje nove instance AggregatorManager obara program jer se pokusava load
         //sa vec ucitanim recnikom
-        private static bool isActive = false;
+        public static bool isActive = false;
 
         /// <summary>
         /// Primeti dodavanje agregatorskog koda; proveriti sa asistentom kako bi trebalo to da se sredi
@@ -33,13 +35,15 @@ namespace AMIAggregator
         {
             if (File.Exists(Filename) && !isActive)
             {
-                Load();
-                isActive = true;
+                Load(); 
             }
+            isActive = true;
         }
 
         public bool Connect(AMIMeasurement measurement)
         {
+            CheckMeasurement(measurement);
+
             Console.WriteLine("Received: " + measurement.ToString());
             if (Program.Message.Buffer.ContainsKey(measurement.DeviceCode))
             {
@@ -55,6 +59,8 @@ namespace AMIAggregator
 
         public bool SendMeasurement(AMIMeasurement measurement)
         {
+            CheckMeasurement(measurement);
+
             Console.WriteLine("Received: " + measurement.ToString());
             Program.Message.Add(measurement);
             UpdateLog(measurement);
@@ -119,7 +125,7 @@ namespace AMIAggregator
                 if (CheckIfDeviceIsInStorage(measurement.DeviceCode))
                 {
                     var elementToAdd = new XElement("Measurement");
-                    elementToAdd.Add(new XElement("Timestamp", measurement.Timestamp.ToString()));
+                    elementToAdd.Add(new XElement("Timestamp", measurement.Timestamp));
 
                     foreach (var amivp in measurement.Measurement)
                     {
@@ -173,6 +179,18 @@ namespace AMIAggregator
             }
             return false;
         }
+
+        void CheckMeasurement(AMIMeasurement measurement)
+        {
+            if (measurement.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException();
+            }
+            if (!measurement.IsValid())
+            {
+                throw new ArgumentException("The list of measurements in the passed object is improperly formed.");
+            }
+        }
         
         void Load()
         {
@@ -215,6 +233,8 @@ namespace AMIAggregator
                         case ("Measurement"):
                             if (reader.NodeType != XmlNodeType.EndElement)
                                 break;
+                            if (!tempSerialisable.IsValid())
+                                throw new Exception("Something went wrong with loading the .xml file : SerialisableValue has this many pairs: " + tempSerialisable.Measurements.Count);
                             Program.Message.Buffer[currentDeviceCode].Add(tempSerialisable);
                             tempSerialisable = new AMISerializableValue();
                             break;

@@ -31,8 +31,7 @@ namespace AMIAggregator
             AddToList(AggregatorCode);
             Message = new AggregatorMessage(AggregatorCode);
 
-            //WCF mi je malo slab, mozda treba drugacije?
-            //Naziv endpointa je baziraan na nazivu agregatora
+            //Naziv endpointa je baziran na nazivu agregatora
             string AggregatorPath = String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.Port, AggregatorCode);
 
             var binding = new NetTcpBinding();
@@ -46,7 +45,14 @@ namespace AMIAggregator
             AggregatorHost.AddServiceEndpoint(typeof(IAggregator), binding, AggregatorPath);
             AggregatorHost.Open();
 
-            //ovo je za slanje ka SM, to be implemented
+            Console.Write("Waiting for a connection");
+            while (!AggregatorManager.isActive)
+            {
+                Thread.Sleep(1000);
+                Console.Write(".");
+            }
+
+            Console.WriteLine();
 
             double temp;
             if (!double.TryParse(ConfigurationManager.AppSettings["TimeDelay"], out temp))
@@ -61,16 +67,21 @@ namespace AMIAggregator
 
             Console.WriteLine("Aggregator simulator is now active with a message interval of {0} seconds.", timer.Interval / 1000);
 
-            Console.ReadLine();
+            while (true)
+            {
+                Thread.Sleep(10000);
+            }
         }
 
         private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
             IMessageForSystemManagement Proxy;
+
             var binding = new NetTcpBinding();
-            binding.MaxBufferSize = 20000000;
             binding.MaxBufferPoolSize = 20000000;
+            binding.MaxBufferSize = 20000000;
             binding.MaxReceivedMessageSize = 20000000;
+
             ChannelFactory<IMessageForSystemManagement> Factory = new ChannelFactory<IMessageForSystemManagement>(binding, new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.SysPort, AggregatorMessage.SysEndpointName)));
             Proxy = Factory.CreateChannel();
             //poziv slanja ka SM

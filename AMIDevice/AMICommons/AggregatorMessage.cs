@@ -26,7 +26,7 @@ namespace AMICommons
         /// Kod aggregatora, string iz razloga navedenih u AMIMeasurement.DeviceCode
         /// </summary>
         [DataMember]
-        public string AggregatorCode { get; set; }
+        public string AggregatorCode { get; private set; }
         // <summary>
         /// Privatno polje koje prati vreme merenja.
         /// Za zahtevani Unix timestamp, koristi se property Timestamp
@@ -63,6 +63,9 @@ namespace AMICommons
         /// </summary>
         public AggregatorMessage(string id)
         {
+            if (String.IsNullOrWhiteSpace(id))
+                throw new ArgumentNullException();
+
             AggregatorCode = id;
             //Mozda necemo slati poruku u istom trenutku kada konstruisemo
             //Prosirenja ce biti uradjena po potrebi
@@ -76,6 +79,14 @@ namespace AMICommons
         /// <param name="deviceID">Kod AMI uredjaja</param>
         public void Add(AMIMeasurement measurement)
         {
+            if (measurement.IsNullOrEmpty() || measurement==null)
+                throw new ArgumentNullException();
+
+            if (!measurement.IsValid())
+            {
+                throw new ArgumentException("The list of measurements in the passed object is improperly formed.");
+            }
+
             if (Buffer.ContainsKey(measurement.DeviceCode))
             {
                 List<AMIValuePair> elementList = new List<AMIValuePair>();

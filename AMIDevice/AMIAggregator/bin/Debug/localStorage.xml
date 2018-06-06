@@ -1,555 +1,447 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <AllMeasurements>
-  <DeviceCode value="-1583193089">
+  <DeviceCode value="1774286247">
     <Measurement>
-      <Timestamp>1528316437</Timestamp>
+      <Timestamp>1528306638</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-207,584387505233</Value>
+        <Value>-206.81418668283811</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-256,877216723225</Value>
+        <Value>255.95338434071903</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>120,496640246593</Value>
+        <Value>119.1341093774578</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>108,347614186046</Value>
+        <Value>-215.54530149537385</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316441</Timestamp>
+      <Timestamp>1528306640</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-197.98929213685418</Value>
+        <Value>-203.81194848558491</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-259.12121710186881</Value>
+        <Value>246.51029332192161</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>111.69740088735586</Value>
+        <Value>116.52240156732611</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>114.70274881911593</Value>
+        <Value>-220.28766503850355</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316442</Timestamp>
+      <Timestamp>1528306641</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-202.92697491493402</Value>
+        <Value>-208.188866877085</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-261.88713468186887</Value>
+        <Value>246.13952191087392</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>109.21934886799163</Value>
+        <Value>122.81475313930528</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>112.8330089411852</Value>
+        <Value>-220.68029753243565</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316443</Timestamp>
+      <Timestamp>1528306642</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-206.8986962944729</Value>
+        <Value>-209.20075746262481</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-252.33664024264394</Value>
+        <Value>248.50898547121739</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>109.78258711834558</Value>
+        <Value>124.60267633739984</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>122.48405267320761</Value>
+        <Value>-216.99002296896188</Value>
+      </AMIValuePair>
+    </Measurement>
+  </DeviceCode>
+  <DeviceCode value="-1778063489">
+    <Measurement>
+      <Timestamp>1528305576</Timestamp>
+      <AMIValuePair>
+        <Type>Voltage</Type>
+        <Value>-192.80707149478005</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>Current</Type>
+        <Value>200.89853290743127</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>ActivePower</Type>
+        <Value>-171.19912421666044</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>ReactivePower</Type>
+        <Value>-216.46469359028373</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316444</Timestamp>
+      <Timestamp>1528305577</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-203.57647937935616</Value>
+        <Value>-187.690469150753</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-258.98190834884622</Value>
+        <Value>205.62678730004785</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>105.92538284879427</Value>
+        <Value>-164.85819000464778</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>120.1352171209339</Value>
+        <Value>-207.06201571694669</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316445</Timestamp>
+      <Timestamp>1528305578</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-194.76268515491987</Value>
+        <Value>-180.98076610405965</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-249.21038708379976</Value>
+        <Value>209.22278826275041</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>112.7196538665889</Value>
+        <Value>-159.38248589885535</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>128.01167912455819</Value>
+        <Value>-207.26281029277612</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316446</Timestamp>
+      <Timestamp>1528305579</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-197.69856428620341</Value>
+        <Value>-183.33294493208311</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-250.8154815439207</Value>
+        <Value>211.96374599261387</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>119.15923546168916</Value>
+        <Value>-165.58761170021612</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>124.09666720083759</Value>
+        <Value>-202.47573428297218</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316447</Timestamp>
+      <Timestamp>1528305580</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-207.2762029116397</Value>
+        <Value>-175.74473419401085</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-241.10327636827867</Value>
+        <Value>221.10481741982738</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>118.07108523513705</Value>
+        <Value>-171.06643559786789</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>133.13169308851084</Value>
+        <Value>-203.34178167597474</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316448</Timestamp>
+      <Timestamp>1528305581</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-198.1045996300432</Value>
+        <Value>-179.74917721038182</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-234.76633306907786</Value>
+        <Value>225.17254281517705</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>127.70397939938304</Value>
+        <Value>-168.61405617120397</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>125.6452880840028</Value>
+        <Value>-198.23225193528097</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316449</Timestamp>
+      <Timestamp>1528305582</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-197.86903497477485</Value>
+        <Value>-180.11627974552863</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-239.37757316435577</Value>
+        <Value>230.54290574441802</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>134.2154996112061</Value>
+        <Value>-169.81471087681814</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>128.55281521871351</Value>
+        <Value>-195.60833685361237</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316450</Timestamp>
+      <Timestamp>1528305583</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-198.59672061754239</Value>
+        <Value>-180.63901134097904</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-246.93541141549846</Value>
+        <Value>228.96386642286737</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>140.51916998509276</Value>
+        <Value>-162.60588647825918</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>133.78033717338943</Value>
+        <Value>-202.40464847134643</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316451</Timestamp>
+      <Timestamp>1528305584</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-199.55682413166241</Value>
+        <Value>-173.51150451670938</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-251.31716290503613</Value>
+        <Value>223.76341752696945</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>131.28740226909861</Value>
+        <Value>-168.81602866007762</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>131.86309144173893</Value>
+        <Value>-205.30145767903954</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316452</Timestamp>
+      <Timestamp>1528305585</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-207.30187318674376</Value>
+        <Value>-167.56670442529335</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-258.5688804916893</Value>
+        <Value>220.83944572547429</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>139.93627620578567</Value>
+        <Value>-166.5573522669996</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>126.23392864793257</Value>
+        <Value>-210.75698187749691</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316453</Timestamp>
+      <Timestamp>1528305586</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-200.01547883684538</Value>
+        <Value>-161.47458748494955</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-264.68554858895283</Value>
+        <Value>222.6209084352576</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>131.43557719999717</Value>
+        <Value>-158.09337243768079</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>117.79675155589207</Value>
+        <Value>-201.98571673966279</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316454</Timestamp>
+      <Timestamp>1528305636</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-191.79245026958756</Value>
+        <Value>-162.11579823732183</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-270.97462483727128</Value>
+        <Value>217.01968635014248</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>133.34896051527417</Value>
+        <Value>-163.84705305837423</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>124.74914563901218</Value>
+        <Value>-196.43726436255372</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316455</Timestamp>
+      <Timestamp>1528305637</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-187.8566889678392</Value>
+        <Value>-155.58751802220363</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-274.64875162842162</Value>
+        <Value>208.65619580291971</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>134.75130556698483</Value>
+        <Value>-160.65369186767083</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>120.09398617925776</Value>
+        <Value>-190.57497107310917</Value>
+      </AMIValuePair>
+    </Measurement>
+  </DeviceCode>
+  <DeviceCode value="95957740">
+    <Measurement>
+      <Timestamp>1528305562</Timestamp>
+      <AMIValuePair>
+        <Type>Voltage</Type>
+        <Value>-146.34080585853238</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>Current</Type>
+        <Value>-257.77446388629005</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>ActivePower</Type>
+        <Value>264.16052782962123</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>ReactivePower</Type>
+        <Value>200.16761821190252</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316456</Timestamp>
+      <Timestamp>1528305563</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-190.19719158680979</Value>
+        <Value>-154.87573221646053</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-283.96361083535646</Value>
+        <Value>-258.65854036512712</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>129.80949839894169</Value>
+        <Value>264.72167471597049</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>111.18696997044003</Value>
+        <Value>205.1264618766152</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316457</Timestamp>
+      <Timestamp>1528305564</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-193.41844495964165</Value>
+        <Value>-159.87045243376423</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-289.45879616237193</Value>
+        <Value>-258.39460036130367</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>136.97877994923795</Value>
+        <Value>258.12337156856591</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>108.8409284818177</Value>
+        <Value>210.18270591235847</Value>
+      </AMIValuePair>
+    </Measurement>
+  </DeviceCode>
+  <DeviceCode value="1695600482">
+    <Measurement>
+      <Timestamp>1528305561</Timestamp>
+      <AMIValuePair>
+        <Type>Voltage</Type>
+        <Value>-220.793096099884</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>Current</Type>
+        <Value>222.955919867827</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>ActivePower</Type>
+        <Value>250.342223717059</Value>
+      </AMIValuePair>
+      <AMIValuePair>
+        <Type>ReactivePower</Type>
+        <Value>175.000326696318</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316458</Timestamp>
+      <Timestamp>1528305562</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-194.84963312319</Value>
+        <Value>-220.7294624288237</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-284.80959256310467</Value>
+        <Value>231.10818336862519</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>133.66554492743012</Value>
+        <Value>243.32959463742077</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>109.25053117668749</Value>
+        <Value>167.91194483028355</Value>
       </AMIValuePair>
     </Measurement>
     <Measurement>
-      <Timestamp>1528316459</Timestamp>
+      <Timestamp>1528305563</Timestamp>
       <AMIValuePair>
         <Type>Voltage</Type>
-        <Value>-189.65548309481494</Value>
+        <Value>-225.51081788936193</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>Current</Type>
-        <Value>-281.67276506110693</Value>
+        <Value>239.2980420986647</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ActivePower</Type>
-        <Value>128.1799168317485</Value>
+        <Value>234.95571582762324</Value>
       </AMIValuePair>
       <AMIValuePair>
         <Type>ReactivePower</Type>
-        <Value>108.2669205624922</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316460</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-192.23658139828436</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-274.978202166957</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>120.23512170241916</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>118.04463770941118</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316461</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-187.19737826110676</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-277.48377985622915</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>124.5944470733378</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>122.07229463759452</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316462</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-188.60230282116791</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-281.24112934025061</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>125.70196514888755</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>118.86175028461115</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316463</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-190.3073374402278</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-280.96807463046542</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>116.07549817211714</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>111.05783161057991</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316464</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-197.5392147505373</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-276.40563077451924</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>122.88312444271662</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>117.55573748217698</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316465</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-201.97715827169697</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-278.18766189515014</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>127.09940015762082</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>119.70110508925333</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316466</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-192.59832955785018</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-281.64477345517128</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>118.6969978523892</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>129.3065350946535</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316467</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-183.88113176118634</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-272.91229739920811</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>113.1754499628094</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>125.67796775776797</Value>
-      </AMIValuePair>
-    </Measurement>
-    <Measurement>
-      <Timestamp>1528316468</Timestamp>
-      <AMIValuePair>
-        <Type>Voltage</Type>
-        <Value>-181.06106699959423</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>Current</Type>
-        <Value>-265.63353782828597</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ActivePower</Type>
-        <Value>115.66893503613252</Value>
-      </AMIValuePair>
-      <AMIValuePair>
-        <Type>ReactivePower</Type>
-        <Value>124.21811291119926</Value>
+        <Value>177.11781275231294</Value>
       </AMIValuePair>
     </Measurement>
   </DeviceCode>

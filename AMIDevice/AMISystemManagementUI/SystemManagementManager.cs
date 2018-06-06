@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -10,7 +11,8 @@ using System.Xml.Linq;
 
 namespace AMISystemManagementUI
 {
-    class SystemManagementManager : IMessageForSystemManagement
+    [ServiceBehavior(IncludeExceptionDetailInFaults = true)]
+    public class SystemManagementManager : IMessageForSystemManagement
     {
         private string Filename = "globalStorage.xml";
         public bool SendMessageToSystemManagement(AggregatorMessage message)
@@ -19,6 +21,22 @@ namespace AMISystemManagementUI
             //Ovde radimo serijalizaciju? Mozda ni ne treba skladistiti LastAggregatorMessage, ali je korisno za debug
             UpdateLog(message);
             return true;
+        }
+
+        void Validate(AggregatorMessage message)
+        {
+            if (message.Buffer == null)
+                throw new ArgumentNullException();
+            foreach (var measurementList in message.Buffer.Values)
+            {
+                foreach (var measurementGroup in measurementList)
+                {
+                    if (!measurementGroup.IsValid())
+                        throw new ArgumentException();
+                    if (measurementGroup.Measurements == null)
+                        throw new ArgumentNullException();
+                }
+            }
         }
 
         public void UpdateLog(AggregatorMessage message)

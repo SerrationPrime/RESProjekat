@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\
 AMISystemManagementUI
 none
 false
 DEBUG;TRACE
-C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\App.xaml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\App.xaml
 3571287950
 
-13-1461472252
-70-417256268
+1328817622
+70239579883
 AlarmWindow.xaml;MainWindow.xaml;PlotWindow.xaml;
 
-False
+True
 

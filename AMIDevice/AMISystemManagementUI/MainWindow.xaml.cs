@@ -27,7 +27,7 @@ namespace AMISystemManagementUI
     {
         ServiceHost SystemManagementHost;
 
-        public PlotModel Model { get;private set; }
+        public PlotModel Model { get; private set; }
 
         public static AggregatorMessage LastAggregatorMessage;
         public string Filename = "globalStorage.xml";
@@ -65,8 +65,8 @@ namespace AMISystemManagementUI
 
             long minTime = DateHelper.StartOfDay(date);
             long maxTime = DateHelper.EndOfDay(date);
-            
-            string type =  comboBoxMeasurementType.SelectedItem.ToString();            List<int> vremena = new List<int>() ;
+
+            string type = comboBoxMeasurementType.SelectedItem.ToString(); List<int> vremena = new List<int>();
             List<int> vrednosti = new List<int>();
 
             var GraphSeries = new LineSeries { Title = type, MarkerType = MarkerType.Circle };
@@ -83,9 +83,9 @@ namespace AMISystemManagementUI
                                 break;
                             if (reader.GetAttribute("value") == deviceCode)
                             {
-                                while(reader.Read() && reader.Name!="DeviceCode")
+                                while (reader.Read() && reader.Name != "DeviceCode")
                                 {
-                                    if (reader.Name == "Timestamp" ) //dateTimeOffset u seconds i onda uporedi sa ovim sekundama
+                                    if (reader.Name == "Timestamp") //dateTimeOffset u seconds i onda uporedi sa ovim sekundama
                                     {
                                         reader.Read();
                                         if (long.Parse(reader.Value) >= minTime && long.Parse(reader.Value) <= maxTime)
@@ -107,7 +107,7 @@ namespace AMISystemManagementUI
                                                 }
                                             }
                                         }
-                                    }   
+                                    }
                                 }
                             }
 
@@ -119,7 +119,10 @@ namespace AMISystemManagementUI
                 }
             }
 
-            Plot.Series.Add(GraphSeries);
+            List<DataPoint> temp =GraphSeries.Points.OrderBy(i => i.X).ToList();
+            var GraphSeriesOrdered = new LineSeries();
+            GraphSeriesOrdered.ItemsSource = temp;
+            Plot.Series.Add(GraphSeriesOrdered);
 
             PlotWindow window = new PlotWindow(Plot);
             window.ShowDialog();
