@@ -18,3 +18,5 @@ C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevi
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\AMIDevice.csproj.CopyComplete
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.exe
 C:\Users\Ja\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\obj\Debug\RESProjekat.pdb
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\RESProjekat.xml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\RESProjekat\bin\Debug\AMICommons.xml

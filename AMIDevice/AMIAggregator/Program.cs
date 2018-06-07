@@ -5,9 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -17,6 +15,9 @@ namespace AMIAggregator
     {
         const string AggregatorLogName = "../AggregatorList.xml";
         public static AggregatorMessage Message;
+        /// <summary>
+        /// Objekat se koristi za pravilno slanje prema SM komponenti prema naznačenom vremenskom periodu
+        /// </summary>
         static System.Timers.Timer timer = new System.Timers.Timer();
 
         static void Main(string[] args)
@@ -36,21 +37,11 @@ namespace AMIAggregator
 
             var binding = new NetTcpBinding();
             //Podrska za vise endpointova na istom agregatoru, ali zahteva neko adminsko nameštanje
-            //proveri https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/how-to-enable-the-net-tcp-port-sharing-service
-            //sa asistentom proveriti moguće alternative
-            //skladistiti port zajedno sa nazivima agregatora? Sačekaću sa tom funkcijom dok to ne potvrdim sa njim
-            //za sada, sve je funkcionalno
+            //proveriti https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/how-to-enable-the-net-tcp-port-sharing-service
             binding.PortSharingEnabled = true;
             ServiceHost AggregatorHost = new ServiceHost(typeof(AggregatorManager));
             AggregatorHost.AddServiceEndpoint(typeof(IAggregator), binding, AggregatorPath);
             AggregatorHost.Open();
-
-            Console.Write("Waiting for a connection");
-            while (!AggregatorManager.isActive)
-            {
-                Thread.Sleep(1000);
-                Console.Write(".");
-            }
 
             Console.WriteLine();
 
@@ -67,39 +58,51 @@ namespace AMIAggregator
 
             Console.WriteLine("Aggregator simulator is now active with a message interval of {0} seconds.", timer.Interval / 1000);
 
+            //Petlja dodata zbog problema sa automatskim testiranjem i Console.ReadKey() blokiranjem.
             while (true)
             {
                 Thread.Sleep(10000);
             }
         }
 
+        /// <summary>
+        /// Nit zaduzena za periodicno slanje podataka ka SM.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            IMessageForSystemManagement Proxy;
-
-            var binding = new NetTcpBinding();
-            binding.MaxBufferPoolSize = 20000000;
-            binding.MaxBufferSize = 20000000;
-            binding.MaxReceivedMessageSize = 20000000;
-
-            ChannelFactory<IMessageForSystemManagement> Factory = new ChannelFactory<IMessageForSystemManagement>(binding, new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.SysPort, AggregatorMessage.SysEndpointName)));
-            Proxy = Factory.CreateChannel();
-            //poziv slanja ka SM
-            //Podesi timestamp poruke u trenutku slanja
-            try
+            if (Message.Buffer.Count >= 0)
             {
-                Message.Timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
-                Proxy.SendMessageToSystemManagement(Message);
-                //poziv brisanja podataka ako je slanje uspesno
-                Console.WriteLine("Data successfuly sent.");
-                AggregatorManager.ClearData();
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-                Console.WriteLine("Could not send data");
-            }
+                IMessageForSystemManagement Proxy;
+                //Potrebna podešavanja zbog veličine prenesenih podataka
+                var binding = new NetTcpBinding();
+                binding.MaxBufferPoolSize = 20000000;
+                binding.MaxBufferSize = 20000000;
+                binding.MaxReceivedMessageSize = 20000000;
 
+                ChannelFactory<IMessageForSystemManagement> Factory = new ChannelFactory<IMessageForSystemManagement>(binding, new EndpointAddress(String.Format("net.tcp://localhost:{0}/{1}", AggregatorMessage.SysPort, AggregatorMessage.SysEndpointName)));
+                Proxy = Factory.CreateChannel();
+                //poziv slanja ka SM
+                //Podesi timestamp poruke u trenutku slanja
+                try
+                {
+                    Message.Timestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
+                    Proxy.SendMessageToSystemManagement(Message);
+                    //poziv brisanja podataka ako je slanje uspesno
+                    Console.WriteLine("Data successfuly sent.");
+                    AggregatorManager.ClearData();
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc.Message);
+                    Console.WriteLine("Could not send data");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Nothing to send.");
+            }
 
         }
 

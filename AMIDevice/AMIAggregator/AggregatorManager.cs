@@ -4,11 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace AMIAggregator
 {
@@ -19,17 +16,14 @@ namespace AMIAggregator
     public class AggregatorManager : IAggregator
     {
         //Kako podržavamo više različitih agregatora? Svakom treba sopstveni fajl
-        //Verovatno ćemo i ovo morati preko configa
-        //Verovatno namestiti i singleton, nema smisla da više managera radi konkurentno
+        //Potrebno je napraviti zaseban .exe za svaki
         private static string Filename="localStorage.xml";
         //Za rad sa vise uredjaja; bez ovoga, pokretanje nove instance AggregatorManager obara program jer se pokusava load
         //sa vec ucitanim recnikom
         public static bool isActive = false;
 
         /// <summary>
-        /// Primeti dodavanje agregatorskog koda; proveriti sa asistentom kako bi trebalo to da se sredi
-        /// .pdf spominje listanje agregatora, ali kako sve skladistiti?
-        /// Da li SystemManagement pamti?
+        /// Pozvano pri svakoj konekciji sa uređaja, inicijalizuje poruku za SystemManagement
         /// </summary>
         public AggregatorManager()
         {
@@ -82,6 +76,10 @@ namespace AMIAggregator
         }
 
        
+        /// <summary>
+        /// Serijalizacija poruke, uradena ručno zbog kompleksne strukture podataka
+        /// </summary>
+        /// <param name="measurement"></param>
         void UpdateLog(AMIMeasurement measurement)
         {
             if (!File.Exists(Filename))
@@ -94,7 +92,6 @@ namespace AMIAggregator
                     xmlWriter.WriteStartDocument();
                     xmlWriter.WriteStartElement("AllMeasurements");
 
-                   // xmlWriter.WriteStartElement("AMIMeasurement");
                     xmlWriter.WriteStartElement("DeviceCode");
                     xmlWriter.WriteAttributeString("value",measurement.DeviceCode);
                  
@@ -105,7 +102,6 @@ namespace AMIAggregator
                         xmlWriter.WriteStartElement("AMIValuePair");
                         xmlWriter.WriteElementString("Type", amivp.Type.ToString());
                         xmlWriter.WriteElementString("Value", amivp.Value.ToString());
-                        //xmlWriter.WriteElementString("Timestamp",amivp.Timestamp.ToString()); //ovo je daleko bolje resenje, treba da se koristi amiSerializableBValue, ili da se doda timestamp unutar AmiValuePair. Onda uklanjam timestamp tag od gore. U svrhe crtanja dijagrama, ovo je jedino korektno resenje.
                         xmlWriter.WriteEndElement();    //za AMIValuePair
                     }
                     xmlWriter.WriteEndElement();    //za Measurement
@@ -165,6 +161,11 @@ namespace AMIAggregator
             }
         }
 
+        /// <summary>
+        /// Proverava postojanje deviceCode-a u skladistu sa vrednosti deviceCode
+        /// </summary>
+        /// <param name="deviceCode"></param>
+        /// <returns>True ako deviceCode postoji u lokalnom skladistu</returns>
         bool CheckIfDeviceIsInStorage(string deviceCode)
         {
             using (XmlReader reader = XmlReader.Create(Filename))
@@ -180,6 +181,10 @@ namespace AMIAggregator
             return false;
         }
 
+        /// <summary>
+        /// Validacija prosleđenog merenja, baca izuzetak u neočekivanom slučaju
+        /// </summary>
+        /// <param name="measurement"></param>
         void CheckMeasurement(AMIMeasurement measurement)
         {
             if (measurement.IsNullOrEmpty())
@@ -191,7 +196,11 @@ namespace AMIAggregator
                 throw new ArgumentException("The list of measurements in the passed object is improperly formed.");
             }
         }
-        
+
+        /// <summary>
+        /// Deserijalizacija iz lokalnog skladišta, pozvana pri inicijalnom pokretanju agregatora u okviru praznog konstruktora i WCF protokola:
+        /// WCF kreira instancu svake implementacije WCF usluge pri pozivu ChannelFactory.CreateChannel().
+        /// </summary>
         void Load()
         {
             using (XmlReader reader = XmlReader.Create(Filename))

@@ -1,9 +1,5 @@
 ﻿using AMICommons;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Configuration;
 using System.Xml;
@@ -79,6 +75,7 @@ namespace AMIDevice
                 {
                     Console.WriteLine(e.Message);
                     System.Threading.Thread.Sleep(10000);
+                    Proxy = Factory.CreateChannel();
                 }
             }
             Console.WriteLine("Successfully connected.");
@@ -107,27 +104,39 @@ namespace AMIDevice
             }
         }
 
+        /// <summary>
+        /// Proverava konfigurisani AggregatorLogPath fajl za postojanje konfigurisanog Aggregator fajla.
+        /// Takođe ispisuje sve agregatore iz AggregatorLogPath fajla.
+        /// </summary>
+        /// <returns></returns>
         static string ReadAndValidateFromConfig()
         {
             string AggregatorFromConfig=ConfigurationManager.AppSettings["Aggregator"];
+
+            string retVal = "";
+            Console.WriteLine("Available aggregators:");
 
             using (XmlReader read = XmlReader.Create(ConfigurationManager.AppSettings["AggregatorLogPath"]))
             {
                 while (read.Read())
                 {
-                    if (read.Name == "Aggregator")
+                    if (read.Name == "Aggregator" && read.NodeType!=XmlNodeType.EndElement)
                     {
                         read.Read();
+                        Console.WriteLine(read.Value);
                         if (read.Value == AggregatorFromConfig)
                         {
-                            return AggregatorFromConfig;
+                            retVal = AggregatorFromConfig;
                         }
                     }       
                 }
             }
 
-            Console.WriteLine("Invalid aggregator name in config. Press any key to exit program.");
-            return "";
+            Console.WriteLine("----------------------------");
+
+            if (retVal=="")
+                Console.WriteLine("Invalid aggregator name in config. Press any key to exit program.");
+            return retVal;
         }
     }
 }

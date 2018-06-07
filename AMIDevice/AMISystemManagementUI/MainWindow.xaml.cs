@@ -1,21 +1,12 @@
 ﻿using AMICommons;
 using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 
 namespace AMISystemManagementUI
@@ -29,7 +20,6 @@ namespace AMISystemManagementUI
 
         public PlotModel Model { get; private set; }
 
-        public static AggregatorMessage LastAggregatorMessage;
         public string Filename = "globalStorage.xml";
         public MainWindow()
         {
@@ -58,10 +48,10 @@ namespace AMISystemManagementUI
         {
             if (!ValidateDeviceMeasurement())
                 return;
-            //to do: crtanje dijagrama
+
+            DateTime date = DateHelper.ParseDate(textBoxDate.Text);
+
             string deviceCode = textBoxDeviceCode.Text.Trim();
-            string[] dateTime = textBoxDate.Text.Trim().Split('.');
-            DateTime date = new DateTime(Int32.Parse(dateTime[2]), Int32.Parse(dateTime[1]), Int32.Parse(dateTime[0]));
 
             long minTime = DateHelper.StartOfDay(date);
             long maxTime = DateHelper.EndOfDay(date);
@@ -71,6 +61,7 @@ namespace AMISystemManagementUI
 
             var GraphSeries = new LineSeries { Title = type, MarkerType = MarkerType.Circle };
             var Plot = new PlotModel { Title = "" };
+            Plot.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "hh/mm" });
 
             using (XmlReader reader = XmlReader.Create(Filename))
             {
@@ -85,12 +76,12 @@ namespace AMISystemManagementUI
                             {
                                 while (reader.Read() && reader.Name != "DeviceCode")
                                 {
-                                    if (reader.Name == "Timestamp") //dateTimeOffset u seconds i onda uporedi sa ovim sekundama
+                                    if (reader.Name == "Timestamp" && reader.NodeType != XmlNodeType.EndElement)
                                     {
                                         reader.Read();
                                         if (long.Parse(reader.Value) >= minTime && long.Parse(reader.Value) <= maxTime)
                                         {
-                                            var time = (Double.Parse(reader.Value));
+                                            var time = DateHelper.TimeStampToOxyTime(long.Parse(reader.Value));
                                             while (reader.Read())
                                             {
                                                 if (reader.Name == "Type")
@@ -119,10 +110,7 @@ namespace AMISystemManagementUI
                 }
             }
 
-            List<DataPoint> temp =GraphSeries.Points.OrderBy(i => i.X).ToList();
-            var GraphSeriesOrdered = new LineSeries();
-            GraphSeriesOrdered.ItemsSource = temp;
-            Plot.Series.Add(GraphSeriesOrdered);
+            Plot.Series.Add(SortPointsInSeries(GraphSeries));
 
             PlotWindow window = new PlotWindow(Plot);
             window.ShowDialog();
@@ -130,20 +118,103 @@ namespace AMISystemManagementUI
 
         private void buttonDraw2_Click(object sender, RoutedEventArgs e)
         {
-            ValidateAggregatorMeasurement();
-            //to do: crtanje dijagrama
-        }
+            if (!ValidateAggregatorMeasurement())
+                return;
+            Dictionary<long, List<double>> desiredMeasurements = GenericAggregatorPlotPrep();
+            string type = comboBoxMeasurementType.SelectedItem.ToString(); List<int> vremena = new List<int>();
 
-        //private void buttonDraw3_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ValidateAverageDeviceMeasurement();
-        //    //to do: crtanje dijagrama
-        //}
+            var GraphSeries = new LineSeries { Title = type, MarkerType = MarkerType.Circle };
+            var Plot = new PlotModel { Title = "" };
+            Plot.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "hh/mm" });
+            foreach (var pair in desiredMeasurements)
+            {
+                var time = DateHelper.TimeStampToOxyTime(pair.Key);
+                var value = pair.Value.Sum();
+                GraphSeries.Points.Add(new DataPoint(time, value));
+            }
+
+            Plot.Series.Add(SortPointsInSeries(GraphSeries));
+
+            PlotWindow window = new PlotWindow(Plot);
+            window.ShowDialog();
+        }
 
         private void buttonDraw4_Click(object sender, RoutedEventArgs e)
         {
-            ValidateAverageAggregatorMeasurement();
-            //to do: crtanje dijagrama
+            if (!ValidateAverageAggregatorMeasurement())
+                return;
+            Dictionary<long, List<double>> desiredMeasurements = GenericAggregatorPlotPrep();
+            string type = comboBoxMeasurementType.SelectedItem.ToString(); List<int> vremena = new List<int>();
+
+            var GraphSeries = new LineSeries { Title = type, MarkerType = MarkerType.Circle };
+            var Plot = new PlotModel { Title = "" };
+            Plot.Axes.Add(new DateTimeAxis { Position = AxisPosition.Bottom, StringFormat = "hh/mm" });
+            foreach (var pair in desiredMeasurements)
+            {
+                var time = DateHelper.TimeStampToOxyTime(pair.Key);
+                var value = pair.Value.Average();
+                GraphSeries.Points.Add(new DataPoint(time, value));
+            }
+
+            Plot.Series.Add(SortPointsInSeries(GraphSeries));
+
+            PlotWindow window = new PlotWindow(Plot);
+            window.ShowDialog();
+        }
+
+        Dictionary<long,List<double>> GenericAggregatorPlotPrep()
+        {
+            DateTime date = DateHelper.ParseDate(textBoxDate.Text);
+
+            string aggregatorCode = textBoxAgregatorCode.Text.Trim();
+
+            long minTime = DateHelper.StartOfDay(date);
+            long maxTime = DateHelper.EndOfDay(date);
+
+            string type = comboBoxMeasurementType.SelectedItem.ToString(); List<int> vremena = new List<int>();
+            List<int> vrednosti = new List<int>();
+
+            Dictionary<long, List<double>> desiredMeasurements = new Dictionary<long, List<double>>();
+
+
+            using (XmlReader reader = XmlReader.Create(Filename))
+            {
+                while (reader.Read())
+                {
+                    if (reader.Name=="AggregatorCode" && reader.GetAttribute("value") == aggregatorCode)
+                    {
+                        while (reader.Read() && reader.Name != "AggregatorCode")
+                        {
+                            if (reader.Name == "Timestamp" && reader.NodeType!=XmlNodeType.EndElement)
+                            {
+                                reader.Read();
+                                var currTimestamp = long.Parse(reader.Value);
+                                if (currTimestamp >= minTime && currTimestamp <= maxTime)
+                                {
+                                    if (!desiredMeasurements.ContainsKey(currTimestamp))
+                                        desiredMeasurements.Add(currTimestamp, new List<double>());
+                                    while (reader.Read())
+                                    {
+                                        if (reader.Name == "Type")
+                                        {
+                                            reader.Read();
+                                            if (reader.Value == type)
+                                            {
+                                                reader.ReadToFollowing("Value");
+                                                reader.Read();
+                                                var value = (Double.Parse(reader.Value));
+                                                desiredMeasurements[currTimestamp].Add(value);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return desiredMeasurements;
         }
 
         private void ButtonEnlistAlarm_Click(object sender, RoutedEventArgs e)
@@ -296,39 +367,6 @@ namespace AMISystemManagementUI
             return ValidateCommon();
         }
 
-        //private bool ValidateAverageDeviceMeasurement()
-        //{
-        //    ValidateCommon();
-        //    if (textBoxDeviceCode.Text.Trim().Equals(""))
-        //    {
-        //        labelDeviceCodeError.Content = "Enter device code.";
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        labelDeviceCodeError.Content = "";
-        //    }
-        //    //if(textBoxDeviceCode.Text.Trim().Length != VREDNOST)    //proveri da li unesen broj odgovara hash formatu
-        //    //{                                                       //takodje proveri da li ima slovo umesto broja
-        //    //      labelDeviceCodeError.Content = "Device code is invalid";
-        //    //      return false;
-        //    //}
-        //    // else
-        //    //{
-        //    //    labelDeviceCodeError.Content = "";
-        //    //}
-        //    //if(textBoxDeviceCode.Text.Trim() not exists )     //proveri da li postoji uredjaj sa tim kodom
-        //    //{
-        //    //    labelDeviceCodeError.Content = "Device with that code does not exist.";
-        //    //    return false;
-        //    //} 
-        //    // else
-        //    //{
-        //    //    labelDeviceCodeError.Content = "";
-        //    //}
-        //    return ValidateCommon();
-        //}
-
         private bool ValidateAverageAggregatorMeasurement()
         {
             ValidateCommon();
@@ -369,6 +407,14 @@ namespace AMISystemManagementUI
             //    labelAgregatorCodeError.Content = "";
             //}
             return ValidateCommon();
+        }
+
+        LineSeries SortPointsInSeries(LineSeries GraphSeries)
+        {
+            List<DataPoint> temp = GraphSeries.Points.OrderBy(i => i.X).ToList();
+            var GraphSeriesOrdered = new LineSeries();
+            GraphSeriesOrdered.ItemsSource = temp;
+            return GraphSeriesOrdered;
         }
     }
 }

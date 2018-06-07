@@ -17,12 +17,16 @@ namespace AMISystemManagementUI
         private string Filename = "globalStorage.xml";
         public bool SendMessageToSystemManagement(AggregatorMessage message)
         {
-            MainWindow.LastAggregatorMessage = message;
+            Validate(message);
             //Ovde radimo serijalizaciju? Mozda ni ne treba skladistiti LastAggregatorMessage, ali je korisno za debug
             UpdateLog(message);
             return true;
         }
 
+        /// <summary>
+        /// Validacija, baca izuzetke ako je message u neocekivanom stanju
+        /// </summary>
+        /// <param name="message"></param>
         void Validate(AggregatorMessage message)
         {
             if (message.Buffer == null)
@@ -39,6 +43,11 @@ namespace AMISystemManagementUI
             }
         }
 
+        /// <summary>
+        /// Serijalizacija, slična onoj implementiranoj u AggregatorManager, ali sa dodatnim nivoom hijerarhije AggregatorCode.
+        /// Primetiti kako se ne serijalizuje Message.Timestamp, jer ga ne koristi nijedan grafik, i nije jasno kako bi on bio implementiran.
+        /// </summary>
+        /// <param name="message"></param>
         public void UpdateLog(AggregatorMessage message)
         {
             if (message.Buffer.Count == 0)
@@ -98,7 +107,7 @@ namespace AMISystemManagementUI
                     //elementToAdd.Add(new XElement("AggregatorTimestamp", message.Timestamp));
                     foreach (var devCode in message.Buffer.Keys)
                     {
-                        if (CheckIfDeviceIsInStorage(devCode))
+                        if (CheckIfDeviceIsInStorage(devCode, message.AggregatorCode))
                         {
                             foreach (var measurement in message.Buffer[devCode])
                             {
@@ -121,9 +130,10 @@ namespace AMISystemManagementUI
                         else
                         {
                             XElement firstRow = deviceCodes.First();
+                            XElement SumElement = new XElement("DeviceCode", new XAttribute("value",devCode));
                             foreach (var measurement in message.Buffer[devCode])
                             {
-                                XElement element = new XElement("Measurement",
+                                var element = new XElement("Measurement",
                                                    new XElement("Timestamp", measurement.Timestamp.ToString()));
 
                                 foreach (var amivp in measurement.Measurements)
@@ -135,19 +145,12 @@ namespace AMISystemManagementUI
                                             );
 
                                 }
-
-                                firstRow.AddBeforeSelf(
-                                    new XElement("DeviceCode", new XAttribute("value", devCode),
-                                         element)
-                                    );
-
-                                
+                                SumElement.Add(new XElement(element));
                             }
+                            firstRow.AddBeforeSelf(SumElement);
                             xDocument.Save(Filename);
                         }
                     }
-
-                    //ovde ide nema ide linija koja kaze gde da smestis elementToAdd
 
                     xDocument.Save(Filename);
                 }
@@ -158,6 +161,7 @@ namespace AMISystemManagementUI
 
                     foreach (var devCode in message.Buffer.Keys)
                     {
+                        var SuperElement = new XElement("DeviceCode", new XAttribute("value", devCode));
                         foreach (var measurement in message.Buffer[devCode])
                         {
                             var elementToAdd2 = new XElement("Measurement");
@@ -170,16 +174,22 @@ namespace AMISystemManagementUI
                                             new XElement("Value", amivp.Value));
                                 elementToAdd2.Add(el2);
                             }
-                            aggregatorCodes.Elements("DeviceCode").First(node => node.Attribute("value").Value == devCode).Add(elementToAdd2);
-
+                            SuperElement.Add(elementToAdd2);
                         }
+                        aggregatorCodes.Last().Add(SuperElement);
                         xDocument.Save(Filename);
+                        
                     }
                     xDocument.Save(Filename);
                 }
             }
         }
-
+        
+        /// <summary>
+        /// Provera da li agregator AggregatorCode postoji u skladistu.
+        /// </summary>
+        /// <param name="aggregatorCode"></param>
+        /// <returns>True ako postoji</returns>
         private bool CheckIfAggregatorIsInStorage(string aggregatorCode)
         {
             using (XmlReader reader = XmlReader.Create(Filename))
@@ -193,24 +203,30 @@ namespace AMISystemManagementUI
             return false;
         }
 
-        bool CheckIfDeviceIsInStorage(string deviceCode)
+        /// <summary>
+        /// Provera da li uređaj DeviceCode postoji u skladistu u okviru specificnog agregatora aggCode
+        /// </summary>
+        /// <param name="deviceCode"></param>
+        /// <returns>True ako postoji</returns>
+        bool CheckIfDeviceIsInStorage(string deviceCode, string aggCode)
         {
             using (XmlReader reader = XmlReader.Create(Filename))
             {
-                while (reader.Read())
+                reader.ReadToFollowing("AggregatorCode");
+                if (reader.GetAttribute("value") == aggCode)
                 {
-                    if (reader.Name == "DeviceCode" && (reader.GetAttribute("value") == deviceCode))
+                    while (reader.Read())
                     {
-                        return true;
+                        if (reader.Name == "DeviceCode" && (reader.GetAttribute("value") == deviceCode))
+                        {
+                            return true;
+                        }
+                        if (reader.Name == "AggregatorCode")
+                            break;
                     }
                 }
             }
             return false;
-        }
-
-        private void Load()
-        {
-
         }
     }
 }

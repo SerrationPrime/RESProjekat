@@ -26,3 +26,7 @@ C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.Wpf.pdb
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\OxyPlot.Wpf.xml
 C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\PlotWindow.baml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\AlarmTableWindow.g.cs
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\obj\Debug\AlarmTableWindow.baml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\AMISystemManagementUI.xml
+C:\Users\Milan\Documents\GitHub\RESProjekat\AMIDevice\AMISystemManagementUI\bin\Debug\AMICommons.xml
